@@ -95,17 +95,19 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ data, updateData }) => {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 h-full overflow-y-auto">
-      <h2 className="text-2xl font-bold text-gray-900 mb-6">Resume Builder</h2>
+    <div className="bg-black/50 rounded-lg shadow-sm p-6 h-full overflow-y-auto">
+      <h2 className="text-2xl font-bold text-white mb-6">Resume Builder</h2>
       
       {/* Personal Information */}
       <div className="mb-8">
-        <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+        <h3 className="text-lg font-semibold text-white mb-4 flex items-center">
           Personal Information
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          
          <input
             type="file"
+            placeholder="Profile Picture"
             accept="image/*"
             onChange={(e) => {
               const file = e.target.files?.[0];
@@ -134,7 +136,7 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ data, updateData }) => {
               ...data,
               personalInfo: { ...data.personalInfo, fullName: e.target.value }
             })}
-            className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="px-4 py-2 border bg-black/20 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           />
           <input
             type="email"
@@ -144,7 +146,7 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ data, updateData }) => {
               ...data,
               personalInfo: { ...data.personalInfo, email: e.target.value }
             })}
-            className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="px-4 py-2 border bg-black/20 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           />
           <input
             type="tel"
@@ -154,7 +156,7 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ data, updateData }) => {
               ...data,
               personalInfo: { ...data.personalInfo, phone: e.target.value }
             })}
-            className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="px-4 py-2 border bg-black/20 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           />
           <input
             type="text"
@@ -164,7 +166,7 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ data, updateData }) => {
               ...data,
               personalInfo: { ...data.personalInfo, address: e.target.value }
             })}
-            className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="px-4 py-2 border bg-black/20 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           />
         </div>
         <textarea
@@ -175,14 +177,14 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ data, updateData }) => {
             personalInfo: { ...data.personalInfo, summary: e.target.value }
           })}
           rows={3}
-          className="w-full mt-4 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          className="w-full mt-4 px-4 bg-black/20 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
         />
       </div>
 
       {/* Experience */}
       <div className="mb-8">
         <div className="flex items-center justify-between mb-4">
-          <h3 className="text-lg font-semibold text-gray-800">Experience</h3>
+          <h3 className="text-lg font-semibold text-white">Experience</h3>
           <button
             onClick={addExperience}
             className="flex items-center px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
@@ -195,7 +197,7 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ data, updateData }) => {
         {data.experiences.map((exp) => (
           <div key={exp.id} className="mb-4 p-4 border border-gray-200 rounded-lg">
             <div className="flex justify-between items-center mb-3">
-              <h4 className="font-medium text-gray-700">Experience Entry</h4>
+              <h4 className="font-medium text-white">Experience Entry</h4>
               <button
                 onClick={() => removeExperience(exp.id)}
                 className="text-red-500 hover:text-red-700"
@@ -209,21 +211,21 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ data, updateData }) => {
                 placeholder="Company"
                 value={exp.company}
                 onChange={(e) => updateExperience(exp.id, 'company', e.target.value)}
-                className="px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="px-3 py-2 border bg-black/20 border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
               <input
                 type="text"
                 placeholder="Position"
                 value={exp.position}
                 onChange={(e) => updateExperience(exp.id, 'position', e.target.value)}
-                className="px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="px-3 py-2 border bg-black/20 border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
               <input
                 type="date"
                 placeholder="Start Date"
                 value={exp.startDate}
                 onChange={(e) => updateExperience(exp.id, 'startDate', e.target.value)}
-                className="px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="px-3 py-2 border bg-black/20 border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
               <input
                 type="date"
@@ -231,7 +233,7 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ data, updateData }) => {
                 value={exp.endDate}
                 onChange={(e) => updateExperience(exp.id, 'endDate', e.target.value)}
                 disabled={exp.current}
-                className="px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-100"
+                className="px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-black/20 disabled:bg-gray-100"
               />
             </div>
             <label className="flex items-center mb-3">
@@ -241,14 +243,14 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ data, updateData }) => {
                 onChange={(e) => updateExperience(exp.id, 'current', e.target.checked)}
                 className="mr-2"
               />
-              <span className="text-sm text-gray-600">Currently working here</span>
+              <span className="text-sm text-white">Currently working here</span>
             </label>
             <textarea
               placeholder="Job Description"
               value={exp.description}
               onChange={(e) => updateExperience(exp.id, 'description', e.target.value)}
               rows={3}
-              className="w-full px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-3 py-2 border bg-black/20 border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             />
           </div>
         ))}
@@ -257,7 +259,7 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ data, updateData }) => {
       {/* Education */}
       <div className="mb-8">
         <div className="flex items-center justify-between mb-4">
-          <h3 className="text-lg font-semibold text-gray-800">Education</h3>
+          <h3 className="text-lg font-semibold text-white">Education</h3>
           <button
             onClick={addEducation}
             className="flex items-center px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
@@ -270,7 +272,7 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ data, updateData }) => {
         {data.education.map((edu) => (
           <div key={edu.id} className="mb-4 p-4 border border-gray-200 rounded-lg">
             <div className="flex justify-between items-center mb-3">
-              <h4 className="font-medium text-gray-700">Education Entry</h4>
+              <h4 className="font-medium text-white">Education Entry</h4>
               <button
                 onClick={() => removeEducation(edu.id)}
                 className="text-red-500 hover:text-red-700"
@@ -284,35 +286,35 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ data, updateData }) => {
                 placeholder="Institution"
                 value={edu.institution}
                 onChange={(e) => updateEducation(edu.id, 'institution', e.target.value)}
-                className="px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="px-3 py-2 border bg-black/20 border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
               <input
                 type="text"
                 placeholder="Degree"
                 value={edu.degree}
                 onChange={(e) => updateEducation(edu.id, 'degree', e.target.value)}
-                className="px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="px-3 py-2 border bg-black/20 border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
               <input
                 type="text"
                 placeholder="Field of Study"
                 value={edu.field}
                 onChange={(e) => updateEducation(edu.id, 'field', e.target.value)}
-                className="px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="px-3 py-2 border bg-black/20 border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
               <input
                 type="date"
                 placeholder="Graduation Date"
                 value={edu.graduationDate}
                 onChange={(e) => updateEducation(edu.id, 'graduationDate', e.target.value)}
-                className="px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="px-3 py-2 border bg-black/20 border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
               <input
                 type="text"
                 placeholder="GPA (Optional)"
                 value={edu.gpa || ''}
                 onChange={(e) => updateEducation(edu.id, 'gpa', e.target.value)}
-                className="px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="px-3 py-2 border bg-black/20 border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
             </div>
           </div>
@@ -322,7 +324,7 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ data, updateData }) => {
       {/* Projects */}
       <div className="mb-8">
         <div className="flex items-center justify-between mb-4">
-          <h3 className="text-lg font-semibold text-gray-800">Projects</h3>
+          <h3 className="text-lg font-semibold text-white">Projects</h3>
           <button
             onClick={addProject}
             className="flex items-center px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
@@ -335,7 +337,7 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ data, updateData }) => {
         {data.projects.map((project) => (
           <div key={project.id} className="mb-4 p-4 border border-gray-200 rounded-lg">
             <div className="flex justify-between items-center mb-3">
-              <h4 className="font-medium text-gray-700">Project Entry</h4>
+              <h4 className="font-medium text-white">Project Entry</h4>
               <button
                 onClick={() => removeProject(project.id)}
                 className="text-red-500 hover:text-red-700"
@@ -349,14 +351,14 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ data, updateData }) => {
                 placeholder="Project Name"
                 value={project.name}
                 onChange={(e) => updateProject(project.id, 'name', e.target.value)}
-                className="px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="px-3 py-2 border bg-black/20 border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
               <input
                 type="text"
                 placeholder="Technologies Used"
                 value={project.technologies}
                 onChange={(e) => updateProject(project.id, 'technologies', e.target.value)}
-                className="px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="px-3 py-2 border bg-black/20 border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
             </div>
             <input
@@ -364,14 +366,14 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ data, updateData }) => {
               placeholder="Project Link (Optional)"
               value={project.link || ''}
               onChange={(e) => updateProject(project.id, 'link', e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent mb-3"
+              className="w-full px-3 py-2 border bg-black/20 border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent mb-3"
             />
             <textarea
               placeholder="Project Description"
               value={project.description}
               onChange={(e) => updateProject(project.id, 'description', e.target.value)}
               rows={2}
-              className="w-full px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-3 py-2 border bg-black/20 border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             />
           </div>
         ))}
@@ -379,13 +381,13 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ data, updateData }) => {
 
       {/* Skills */}
       <div className="mb-8">
-        <h3 className="text-lg font-semibold text-gray-800 mb-4">Skills</h3>
+        <h3 className="text-lg font-semibold text-white mb-4">Skills</h3>
         <textarea
           placeholder="Enter skills separated by commas (e.g. JavaScript, React, Node.js, Python)"
           value={data.skills.join(', ')}
           onChange={(e) => updateSkills(e.target.value)}
           rows={3}
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          className="w-full px-4 py-2 border bg-black/20 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
         />
         <p className="text-sm text-gray-500 mt-1">Separate skills with commas</p>
       </div>

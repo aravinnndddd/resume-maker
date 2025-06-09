@@ -56,16 +56,14 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+    <div className="min-h-screen bg-black/80">
       {/* Header */}
-      <header className="bg-white shadow-sm border-b border-gray-200">
+      <header className="bg-black/80 shadow-sm ">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center">
-            <FileText className="w-8 h-8 text-blue-600 mr-3" />
-            <h1 className="text-2xl font-bold text-gray-900">Resume Builder</h1>
-            <span className="ml-3 px-3 py-1 bg-blue-100 text-blue-800 text-sm font-medium rounded-full">
-              Professional
-            </span>
+            <FileText className="w-8 h-8 text-white mr-3" />
+            <h1 className="text-2xl font-bold text-white">Resume Builder</h1>
+            
           </div>
         </div>
       </header>
@@ -92,10 +90,10 @@ function App() {
       </div>
 
       {/* Footer */}
-      <footer className="bg-white border-t border-gray-200 mt-12">
+      <footer className="bg-black/50 border-t border-gray-200 mt-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="text-center text-gray-500 text-sm">
-            <p>Create professional resumes with ease. Your data is saved locally in your browser.</p>
+            <p>Create professional resumes with ease.</p>
           </div>
         </div>
       </footer>
