@@ -17,7 +17,7 @@ export const ModernTemplate: React.FC<ModernTemplateProps> = ({ data }) => {
     <div className="bg-white min-h-[11in] font-sans">
       <div className="flex">
         {/* Left Column */}
-        <div className="w-1/3 bg-gradient-to-b from-blue-600 to-blue-800 text-white p-8">
+        <div className="w-1/3 bg-gradient-to-b  from-blue-600 to-blue-800 text-white p-8">
           <div className="mb-8">
              {data.personalInfo.profilePicture && (
   <img
