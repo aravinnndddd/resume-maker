@@ -7,7 +7,6 @@ import { FileText } from 'lucide-react';
 
 const initialData: ResumeData = {
   personalInfo: {
-    profilePicture: '',
     fullName: '',
     email: '',
     phone: '',
@@ -56,14 +55,13 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-black/80">
+    <div className="min-h-screen bg-black/70">
       {/* Header */}
-      <header className="bg-black/80 shadow-sm ">
+      <header className="bg-white/20 shadow-sm border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center">
             <FileText className="w-8 h-8 text-white mr-3" />
             <h1 className="text-2xl font-bold text-white">Resume Builder</h1>
-            
           </div>
         </div>
       </header>
@@ -92,8 +90,8 @@ function App() {
       {/* Footer */}
       <footer className="bg-black/50 border-t border-gray-200 mt-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="text-center text-gray-500 text-sm">
-            <p>Create professional resumes with ease.</p>
+          <div className="text-center text-white text-sm">
+            <p>Create professional resumes with ease. Your data is saved locally in your browser.</p>
           </div>
         </div>
       </footer>

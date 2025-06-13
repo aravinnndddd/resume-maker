@@ -1,6 +1,6 @@
 import React from 'react';
 import { ResumeData } from '../../types';
-import { Mail, Phone, MapPin, ExternalLink, Briefcase } from 'lucide-react';
+import { Mail, Phone, MapPin, ExternalLink, Briefcase, Star } from 'lucide-react';
 
 interface ExecutiveTemplateProps {
   data: ResumeData;
@@ -13,19 +13,45 @@ export const ExecutiveTemplate: React.FC<ExecutiveTemplateProps> = ({ data }) =>
     return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short' });
   };
 
+  const renderSkillLevel = (skill: { name: string; level: number }) => {
+    const getLevelText = (level: number) => {
+      switch (level) {
+        case 5: return 'Expert';
+        case 4: return 'Advanced';
+        case 3: return 'Proficient';
+        case 2: return 'Intermediate';
+        case 1: return 'Beginner';
+        default: return 'Proficient';
+      }
+    };
+
+    return (
+      <div key={skill.name} className="bg-gray-800 text-white text-center py-3 px-4 rounded font-semibold relative group">
+        <div className="flex items-center justify-center space-x-2">
+          <span>{skill.name}</span>
+          <div className="flex items-center space-x-1">
+            {[1, 2, 3, 4, 5].map((star) => (
+              <Star
+                key={star}
+                className={`w-3 h-3 ${
+                  star <= skill.level ? 'text-yellow-400 fill-current' : 'text-gray-500'
+                }`}
+              />
+            ))}
+          </div>
+        </div>
+        <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-gray-700 text-white px-2 py-1 rounded text-xs opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+          {getLevelText(skill.level)}
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div className="bg-white min-h-[11in] font-serif">
       {/* Header */}
       <div className="border-b-4 border-gray-800 pb-6 mb-8">
         <div className="text-center mb-6">
-           {data.personalInfo.profilePicture && (
-  <img
-    src={data.personalInfo.profilePicture}
-    alt="Profile"
-   className='w-[200px] h-[200px] rounded-full mx-auto mb-4 object-cover'
-    style={{ objectFit: 'cover', borderRadius: '50%' }}
-  />
-)}
           <h1 className="text-4xl font-bold text-gray-900 mb-2 tracking-wide">
             {data.personalInfo.fullName || 'Your Name'}
           </h1>
@@ -154,14 +180,7 @@ export const ExecutiveTemplate: React.FC<ExecutiveTemplateProps> = ({ data }) =>
               CORE COMPETENCIES
             </h2>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-              {data.skills.map((skill, index) => (
-                <div
-                  key={index}
-                  className="bg-gray-800 text-white text-center py-3 px-4 rounded font-semibold"
-                >
-                  {skill}
-                </div>
-              ))}
+              {data.skills.map((skill) => renderSkillLevel(skill))}
             </div>
           </div>
         )}

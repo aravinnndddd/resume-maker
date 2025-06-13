@@ -1,6 +1,6 @@
 import React from 'react';
 import { ResumeData } from '../../types';
-import { Mail, Phone, MapPin, Calendar } from 'lucide-react';
+import { Mail, Phone, MapPin, Calendar, Star } from 'lucide-react';
 
 interface ClassicTemplateProps {
   data: ResumeData;
@@ -13,18 +13,25 @@ export const ClassicTemplate: React.FC<ClassicTemplateProps> = ({ data }) => {
     return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short' });
   };
 
+  const renderStars = (level: number) => {
+    return (
+      <div className="flex items-center space-x-1">
+        {[1, 2, 3, 4, 5].map((star) => (
+          <Star
+            key={star}
+            className={`w-3 h-3 ${
+              star <= level ? 'text-gray-800 fill-current' : 'text-gray-300'
+            }`}
+          />
+        ))}
+      </div>
+    );
+  };
+
   return (
     <div className="bg-white p-8 min-h-[11in] font-serif">
       {/* Header */}
       <div className="text-center mb-8 border-b-2 border-gray-800 pb-4">
-      {data.personalInfo.profilePicture && (
-  <img
-    src={data.personalInfo.profilePicture}
-    alt="Profile"
-   className='w-[200px] h-[200px] rounded-full mx-auto mb-4 object-cover'
-    style={{ objectFit: 'cover', borderRadius: '50%' }}
-  />
-)}
         <h1 className="text-3xl font-bold text-gray-900 mb-2">
           {data.personalInfo.fullName || 'Your Name'}
         </h1>
@@ -133,14 +140,12 @@ export const ClassicTemplate: React.FC<ClassicTemplateProps> = ({ data }) => {
           <h2 className="text-xl font-bold text-gray-800 mb-3 border-b border-gray-300 pb-1">
             SKILLS
           </h2>
-          <div className="flex flex-wrap gap-2">
+          <div className="grid grid-cols-2 gap-3">
             {data.skills.map((skill, index) => (
-              <span
-                key={index}
-                className="px-3 py-1 bg-gray-100 text-gray-700 text-sm rounded"
-              >
-                {skill}
-              </span>
+              <div key={index} className="flex items-center justify-between">
+                <span className="text-sm font-medium text-gray-700">{skill.name}</span>
+                {renderStars(skill.level)}
+              </div>
             ))}
           </div>
         </div>

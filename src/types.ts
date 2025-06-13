@@ -1,5 +1,4 @@
 export interface PersonalInfo {
-  profilePicture: string;
   fullName: string;
   email: string;
   phone: string;
@@ -34,11 +33,17 @@ export interface Project {
   link?: string;
 }
 
+export interface Skill {
+  id: string;
+  name: string;
+  level: number; // 1-5 proficiency level
+}
+
 export interface ResumeData {
   personalInfo: PersonalInfo;
   experiences: Experience[];
   education: Education[];
-  skills: string[];
+  skills: Skill[];
   projects: Project[];
 }
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { ResumeData } from '../../types';
-import { Mail, Phone, MapPin, ExternalLink } from 'lucide-react';
+import { Mail, Phone, MapPin, ExternalLink, Star } from 'lucide-react';
 
 interface ModernTemplateProps {
   data: ResumeData;
@@ -13,20 +13,39 @@ export const ModernTemplate: React.FC<ModernTemplateProps> = ({ data }) => {
     return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short' });
   };
 
+  const renderSkillBar = (skill: { name: string; level: number }) => {
+    const percentage = (skill.level / 5) * 100;
+    return (
+      <div key={skill.name} className="mb-3">
+        <div className="flex justify-between mb-1">
+          <span className="text-sm font-medium">{skill.name}</span>
+          <div className="flex items-center space-x-1">
+            {[1, 2, 3, 4, 5].map((star) => (
+              <Star
+                key={star}
+                className={`w-3 h-3 ${
+                  star <= skill.level ? 'text-white fill-current' : 'text-blue-300'
+                }`}
+              />
+            ))}
+          </div>
+        </div>
+        <div className="w-full bg-blue-700 rounded-full h-2">
+          <div 
+            className="bg-white h-2 rounded-full transition-all duration-300" 
+            style={{ width: `${percentage}%` }}
+          ></div>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div className="bg-white min-h-[11in] font-sans">
       <div className="flex">
         {/* Left Column */}
-        <div className="w-1/3 bg-gradient-to-b  from-blue-600 to-blue-800 text-white p-8">
+        <div className="w-1/3 bg-gradient-to-b from-blue-600 to-blue-800 text-white p-8">
           <div className="mb-8">
-             {data.personalInfo.profilePicture && (
-  <img
-    src={data.personalInfo.profilePicture}
-    alt="Profile"
-   className='w-[200px] h-[200px] rounded-full mx-auto mb-4 object-cover'
-    style={{ objectFit: 'cover', borderRadius: '50%' }}
-  />
-)}
             <h1 className="text-2xl font-bold mb-4">
               {data.personalInfo.fullName || 'Your Name'}
             </h1>
@@ -56,17 +75,8 @@ export const ModernTemplate: React.FC<ModernTemplateProps> = ({ data }) => {
           {data.skills.length > 0 && (
             <div className="mb-8">
               <h2 className="text-lg font-bold mb-4 border-b border-blue-400 pb-2">SKILLS</h2>
-              <div className="space-y-2">
-                {data.skills.map((skill, index) => (
-                  <div key={index} className="text-sm">
-                    <div className="flex justify-between mb-1">
-                      <span>{skill}</span>
-                    </div>
-                    <div className="w-full bg-blue-700 rounded-full h-1">
-                      <div className="bg-white h-1 rounded-full" style={{ width: '85%' }}></div>
-                    </div>
-                  </div>
-                ))}
+              <div className="space-y-3">
+                {data.skills.map((skill) => renderSkillBar(skill))}
               </div>
             </div>
           )}
@@ -78,6 +88,7 @@ export const ModernTemplate: React.FC<ModernTemplateProps> = ({ data }) => {
               {data.education.map((edu) => (
                 <div key={edu.id} className="mb-4 text-sm">
                   <h3 className="font-semibold">{edu.degree}</h3>
+                  {edu.field && <p className="text-blue-200">{edu.field}</p>}
                   <p className="text-blue-200">{edu.institution}</p>
                   <p className="text-blue-100 text-xs">{formatDate(edu.graduationDate)}</p>
                   {edu.gpa && <p className="text-blue-100 text-xs">GPA: {edu.gpa}</p>}

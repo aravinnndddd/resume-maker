@@ -1,6 +1,6 @@
 import React from 'react';
 import { ResumeData } from '../../types';
-import { Mail, Phone, MapPin, ExternalLink, Award } from 'lucide-react';
+import { Mail, Phone, MapPin, ExternalLink, Award, Star } from 'lucide-react';
 
 interface CreativeTemplateProps {
   data: ResumeData;
@@ -13,19 +13,40 @@ export const CreativeTemplate: React.FC<CreativeTemplateProps> = ({ data }) => {
     return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short' });
   };
 
+  const renderSkillPill = (skill: { name: string; level: number }) => {
+    const getSkillColor = (level: number) => {
+      if (level >= 4) return 'from-green-500 to-emerald-500';
+      if (level >= 3) return 'from-blue-500 to-cyan-500';
+      if (level >= 2) return 'from-yellow-500 to-orange-500';
+      return 'from-gray-500 to-gray-600';
+    };
+
+    return (
+      <div key={skill.name} className="relative group">
+        <div className={`bg-gradient-to-r ${getSkillColor(skill.level)} text-white px-4 py-2 rounded-full text-center text-sm font-medium shadow-md transform hover:scale-105 transition-transform`}>
+          {skill.name}
+        </div>
+        <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white px-2 py-1 rounded text-xs opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+          <div className="flex items-center space-x-1">
+            {[1, 2, 3, 4, 5].map((star) => (
+              <Star
+                key={star}
+                className={`w-3 h-3 ${
+                  star <= skill.level ? 'text-yellow-400 fill-current' : 'text-gray-400'
+                }`}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div className="bg-gradient-to-br from-purple-50 to-pink-50 min-h-[11in] font-sans">
       {/* Header */}
       <div className="bg-gradient-to-r from-purple-600 via-pink-600 to-red-500 text-white p-8">
         <div className="max-w-4xl mx-auto">
-           {data.personalInfo.profilePicture && (
-  <img
-    src={data.personalInfo.profilePicture}
-    alt="Profile"
-   className='w-[200px] h-[200px] rounded-full mx-auto mb-4 object-cover'
-    style={{ objectFit: 'cover', borderRadius: '50%' }}
-  />
-)}
           <h1 className="text-4xl font-bold mb-4">
             {data.personalInfo.fullName || 'Your Name'}
           </h1>
@@ -134,13 +155,7 @@ export const CreativeTemplate: React.FC<CreativeTemplateProps> = ({ data }) => {
               <div className="bg-white rounded-2xl shadow-lg p-6">
                 <h2 className="text-2xl font-bold text-purple-800 mb-6">Skills</h2>
                 <div className="space-y-3">
-                  {data.skills.map((skill, index) => (
-                    <div key={index} className="relative">
-                      <div className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-4 py-2 rounded-full text-center text-sm font-medium shadow-md transform hover:scale-105 transition-transform">
-                        {skill}
-                      </div>
-                    </div>
-                  ))}
+                  {data.skills.map((skill) => renderSkillPill(skill))}
                 </div>
               </div>
             )}
