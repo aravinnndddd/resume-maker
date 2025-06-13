@@ -4,6 +4,7 @@ export interface PersonalInfo {
   phone: string;
   address: string;
   summary: string;
+  profilePicture: string;
 }
 
 export interface Experience {
@@ -45,6 +46,7 @@ export interface ResumeData {
   education: Education[];
   skills: Skill[];
   projects: Project[];
+
 }
 
 export type TemplateType = 'classic' | 'modern' | 'creative' | 'executive';

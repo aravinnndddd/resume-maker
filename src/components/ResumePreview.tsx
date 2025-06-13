@@ -1,23 +1,26 @@
-import React, { useRef } from 'react';
-import { useReactToPrint } from 'react-to-print';
-import { Download } from 'lucide-react';
-import { ResumeData, TemplateType } from '../types';
-import { ClassicTemplate } from './templates/ClassicTemplate';
-import { ModernTemplate } from './templates/ModernTemplate';
-import { CreativeTemplate } from './templates/CreativeTemplate';
-import { ExecutiveTemplate } from './templates/ExecutiveTemplate';
+import React, { useRef, useState } from "react";
+import { useReactToPrint } from "react-to-print";
+import { Download, InfoIcon } from "lucide-react";
+import { ResumeData, TemplateType } from "../types";
+import { ClassicTemplate } from "./templates/ClassicTemplate";
+import { ModernTemplate } from "./templates/ModernTemplate";
+
+import { ExecutiveTemplate } from "./templates/ExecutiveTemplate";
 
 interface ResumePreviewProps {
   data: ResumeData;
   selectedTemplate: TemplateType;
 }
 
-export const ResumePreview: React.FC<ResumePreviewProps> = ({ data, selectedTemplate }) => {
+export const ResumePreview: React.FC<ResumePreviewProps> = ({
+  data,
+  selectedTemplate,
+}) => {
   const componentRef = useRef<HTMLDivElement>(null);
 
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
-    documentTitle: `${data.personalInfo.fullName || 'Resume'}_Resume`,
+    documentTitle: `${data.personalInfo.fullName || "Resume"}_Resume`,
     pageStyle: `
       @page {
         size: A4;
@@ -26,29 +29,42 @@ export const ResumePreview: React.FC<ResumePreviewProps> = ({ data, selectedTemp
       @media print {
         body { -webkit-print-color-adjust: exact; }
       }
-    `
+    `,
   });
 
   const renderTemplate = () => {
     switch (selectedTemplate) {
-      case 'classic':
+      case "classic":
         return <ClassicTemplate data={data} />;
-      case 'modern':
+      case "modern":
         return <ModernTemplate data={data} />;
-      case 'creative':
-        return <CreativeTemplate data={data} />;
-      case 'executive':
+
+      case "executive":
         return <ExecutiveTemplate data={data} />;
       default:
         return <ClassicTemplate data={data} />;
     }
   };
 
+  const [isVisible, setIsVisible] = useState(false);
+
+  const handleToggle = () => {
+    setIsVisible((prev) => !prev);
+  };
   return (
-    <div className="bg-white rounded-lg shadow-sm border border-gray-200 h-full flex flex-col">
+    <div className="bg-transparent rounded-lg shadow-sm b h-full flex flex-col">
       {/* Header with Download Button */}
       <div className="p-4 border-b border-gray-200 flex justify-between items-center">
-        <h3 className="text-lg font-semibold text-gray-800">Resume Preview</h3>
+        <h3 className="text-white font-bold text-lg flex  gap-3">
+          <InfoIcon
+            color="white"
+            size={30}
+            onClick={handleToggle}
+            className="cursor-pointer"
+          />
+          Resume Preview
+        </h3>
+
         <button
           onClick={handlePrint}
           className="flex items-center px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition-colors font-medium"
@@ -59,13 +75,15 @@ export const ResumePreview: React.FC<ResumePreviewProps> = ({ data, selectedTemp
       </div>
 
       {/* Preview Area */}
-      <div className="flex-1 overflow-auto p-4 bg-gray-50">
-        <div className="max-w-[8.5in] mx-auto bg-white shadow-lg">
-          <div ref={componentRef} className="w-full">
-            {renderTemplate()}
+      {isVisible && (
+        <div className="flex-1 overflow-auto p-4 bg-gray-50">
+          <div className="max-w-[8.5in] mx-auto bg-white shadow-lg">
+            <div ref={componentRef} className="w-full">
+              {renderTemplate()}
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };
