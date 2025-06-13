@@ -1,32 +1,53 @@
-import React from 'react';
-import { ResumeData } from '../../types';
-import { Mail, Phone, MapPin, ExternalLink, Briefcase, Star } from 'lucide-react';
+import React from "react";
+import { ResumeData } from "../../types";
+import {
+  Mail,
+  Phone,
+  MapPin,
+  ExternalLink,
+  Briefcase,
+  Star,
+} from "lucide-react";
 
 interface ExecutiveTemplateProps {
   data: ResumeData;
 }
 
-export const ExecutiveTemplate: React.FC<ExecutiveTemplateProps> = ({ data }) => {
+export const ExecutiveTemplate: React.FC<ExecutiveTemplateProps> = ({
+  data,
+}) => {
   const formatDate = (dateString: string) => {
-    if (!dateString) return '';
+    if (!dateString) return "";
     const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short' });
+    return date.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "short",
+    });
   };
 
   const renderSkillLevel = (skill: { name: string; level: number }) => {
     const getLevelText = (level: number) => {
       switch (level) {
-        case 5: return 'Expert';
-        case 4: return 'Advanced';
-        case 3: return 'Proficient';
-        case 2: return 'Intermediate';
-        case 1: return 'Beginner';
-        default: return 'Proficient';
+        case 5:
+          return "Expert";
+        case 4:
+          return "Advanced";
+        case 3:
+          return "Proficient";
+        case 2:
+          return "Intermediate";
+        case 1:
+          return "Beginner";
+        default:
+          return "Proficient";
       }
     };
 
     return (
-      <div key={skill.name} className="bg-gray-800 text-white text-center py-3 px-4 rounded font-semibold relative group">
+      <div
+        key={skill.name}
+        className="bg-gray-800 text-white text-center py-3 px-4 rounded font-semibold relative group"
+      >
         <div className="flex items-center justify-center space-x-2">
           <span>{skill.name}</span>
           <div className="flex items-center space-x-1">
@@ -34,7 +55,9 @@ export const ExecutiveTemplate: React.FC<ExecutiveTemplateProps> = ({ data }) =>
               <Star
                 key={star}
                 className={`w-3 h-3 ${
-                  star <= skill.level ? 'text-yellow-400 fill-current' : 'text-gray-500'
+                  star <= skill.level
+                    ? "text-yellow-400 fill-current"
+                    : "text-gray-500"
                 }`}
               />
             ))}
@@ -52,8 +75,14 @@ export const ExecutiveTemplate: React.FC<ExecutiveTemplateProps> = ({ data }) =>
       {/* Header */}
       <div className="border-b-4 border-gray-800 pb-6 mb-8">
         <div className="text-center mb-6">
+          <img
+            src={data.personalInfo.profilePicture}
+            alt="Profile"
+            className="w-[200px] h-[200px] rounded-full mx-auto mb-4 object-cover"
+            style={{ objectFit: "cover", borderRadius: "50%" }}
+          />
           <h1 className="text-4xl font-bold text-gray-900 mb-2 tracking-wide">
-            {data.personalInfo.fullName || 'Your Name'}
+            {data.personalInfo.fullName || "Your Name"}
           </h1>
           <div className="flex justify-center space-x-8 text-sm text-gray-600">
             {data.personalInfo.email && (
@@ -102,17 +131,24 @@ export const ExecutiveTemplate: React.FC<ExecutiveTemplateProps> = ({ data }) =>
               <div key={exp.id} className="mb-8 bg-gray-50 p-6 rounded-lg">
                 <div className="flex justify-between items-start mb-4">
                   <div>
-                    <h3 className="text-xl font-bold text-gray-900">{exp.position}</h3>
-                    <h4 className="text-lg text-gray-700 font-semibold">{exp.company}</h4>
+                    <h3 className="text-xl font-bold text-gray-900">
+                      {exp.position}
+                    </h3>
+                    <h4 className="text-lg text-gray-700 font-semibold">
+                      {exp.company}
+                    </h4>
                   </div>
                   <div className="text-right">
                     <span className="inline-block bg-gray-800 text-white px-3 py-1 rounded text-sm">
-                      {formatDate(exp.startDate)} - {exp.current ? 'Present' : formatDate(exp.endDate)}
+                      {formatDate(exp.startDate)} -{" "}
+                      {exp.current ? "Present" : formatDate(exp.endDate)}
                     </span>
                   </div>
                 </div>
                 {exp.description && (
-                  <p className="text-gray-600 leading-relaxed">{exp.description}</p>
+                  <p className="text-gray-600 leading-relaxed">
+                    {exp.description}
+                  </p>
                 )}
               </div>
             ))}
@@ -128,13 +164,21 @@ export const ExecutiveTemplate: React.FC<ExecutiveTemplateProps> = ({ data }) =>
               </h2>
               {data.education.map((edu) => (
                 <div key={edu.id} className="mb-6 p-4 bg-gray-50 rounded-lg">
-                  <h3 className="text-lg font-bold text-gray-900">{edu.degree}</h3>
-                  {edu.field && <p className="text-gray-700 font-semibold">{edu.field}</p>}
+                  <h3 className="text-lg font-bold text-gray-900">
+                    {edu.degree}
+                  </h3>
+                  {edu.field && (
+                    <p className="text-gray-700 font-semibold">{edu.field}</p>
+                  )}
                   <p className="text-gray-600">{edu.institution}</p>
                   <div className="flex justify-between items-center mt-2">
-                    <span className="text-sm text-gray-500">{formatDate(edu.graduationDate)}</span>
+                    <span className="text-sm text-gray-500">
+                      {formatDate(edu.graduationDate)}
+                    </span>
                     {edu.gpa && (
-                      <span className="text-sm font-semibold text-gray-700">GPA: {edu.gpa}</span>
+                      <span className="text-sm font-semibold text-gray-700">
+                        GPA: {edu.gpa}
+                      </span>
                     )}
                   </div>
                 </div>
@@ -149,9 +193,14 @@ export const ExecutiveTemplate: React.FC<ExecutiveTemplateProps> = ({ data }) =>
                 KEY PROJECTS
               </h2>
               {data.projects.map((project) => (
-                <div key={project.id} className="mb-6 p-4 bg-gray-50 rounded-lg">
+                <div
+                  key={project.id}
+                  className="mb-6 p-4 bg-gray-50 rounded-lg"
+                >
                   <div className="flex justify-between items-start mb-2">
-                    <h3 className="text-lg font-bold text-gray-900">{project.name}</h3>
+                    <h3 className="text-lg font-bold text-gray-900">
+                      {project.name}
+                    </h3>
                     {project.link && (
                       <a
                         href={project.link}
@@ -163,9 +212,13 @@ export const ExecutiveTemplate: React.FC<ExecutiveTemplateProps> = ({ data }) =>
                       </a>
                     )}
                   </div>
-                  <p className="text-sm text-gray-600 font-semibold mb-2">{project.technologies}</p>
+                  <p className="text-sm text-gray-600 font-semibold mb-2">
+                    {project.technologies}
+                  </p>
                   {project.description && (
-                    <p className="text-gray-600 text-sm leading-relaxed">{project.description}</p>
+                    <p className="text-gray-600 text-sm leading-relaxed">
+                      {project.description}
+                    </p>
                   )}
                 </div>
               ))}
@@ -179,7 +232,7 @@ export const ExecutiveTemplate: React.FC<ExecutiveTemplateProps> = ({ data }) =>
             <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center border-b-2 border-gray-300 pb-2">
               CORE COMPETENCIES
             </h2>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            <div className="grid grid-cols-2  gap-4">
               {data.skills.map((skill) => renderSkillLevel(skill))}
             </div>
           </div>
