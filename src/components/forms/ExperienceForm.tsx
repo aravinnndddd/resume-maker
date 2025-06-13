@@ -51,7 +51,7 @@ export const ExperienceForm: React.FC<ExperienceFormProps> = ({
         </h3>
         <button
           onClick={addExperience}
-          className="flex items-center px-3 py-1 bg-white text-black rounded-md hover:bg-blue-700 transition-colors text-sm"
+          className="flex items-center px-3 py-1 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors text-sm"
         >
           <Plus className="w-4 h-4 mr-1" />
           Add Experience

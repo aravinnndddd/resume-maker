@@ -14,7 +14,7 @@ interface ResumeFormProps {
 export const ResumeForm: React.FC<ResumeFormProps> = ({ data, updateData }) => {
   return (
     <div className="bg-black/50 rounded-lg shadow-sm border border-gray-200 p-6 h-full overflow-y-auto">
-      <h2 className="text-2xl font-bold text-gray-900 mb-6">Resume Builder</h2>
+      <h2 className="text-2xl font-bold text-white mb-6">Resume Builder</h2>
 
       <PersonalInfoForm
         data={data.personalInfo}
