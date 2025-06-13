@@ -37,7 +37,7 @@ export const ClassicTemplate: React.FC<ClassicTemplateProps> = ({ data }) => {
       <div className="text-center mb-8 border-b-2 border-gray-800 pb-4">
         <img
           src={data.personalInfo.profilePicture}
-          alt="Profile"
+          alt="Profile picture"
           className="w-[200px] h-[200px] rounded-full mx-auto mb-4 object-cover"
           style={{ objectFit: "cover", borderRadius: "50%" }}
         />

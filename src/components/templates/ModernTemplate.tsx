@@ -41,7 +41,7 @@ export const ModernTemplate: React.FC<ModernTemplateProps> = ({ data }) => {
           <div className="mb-8">
             <img
               src={data.personalInfo.profilePicture}
-              alt="Profile"
+              alt="Profile picture"
               className="w-[200px] h-[200px] rounded-full mx-auto mb-4 object-cover"
               style={{ objectFit: "cover", borderRadius: "50%" }}
             />

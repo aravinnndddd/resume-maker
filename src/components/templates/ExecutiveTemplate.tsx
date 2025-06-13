@@ -77,7 +77,7 @@ export const ExecutiveTemplate: React.FC<ExecutiveTemplateProps> = ({
         <div className="text-center mb-6">
           <img
             src={data.personalInfo.profilePicture}
-            alt="Profile"
+            alt="Profile picture"
             className="w-[200px] h-[200px] rounded-full mx-auto mb-4 object-cover"
             style={{ objectFit: "cover", borderRadius: "50%" }}
           />
