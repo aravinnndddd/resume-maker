@@ -1,6 +1,6 @@
 import React from "react";
 import { PersonalInfo } from "../../types";
-import { User, Mail, Phone, MapPin, FileText } from "lucide-react";
+import { User, Mail, Phone, MapPin, FileText, ImageIcon } from "lucide-react";
 
 interface PersonalInfoFormProps {
   data: PersonalInfo;
@@ -23,6 +23,41 @@ export const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
       </h3>
 
       <div className="space-y-4">
+        {/* Profile Picture Upload */}
+        <div>
+          <label className="block text-sm font-medium text-white mb-1">
+            <ImageIcon className="w-4 h-4 inline mr-1" />
+            Profile Picture
+          </label>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={(e) => {
+              const file = e.target.files?.[0];
+              if (file) {
+                const reader = new FileReader();
+                reader.onloadend = () => {
+                  updateData({
+                    ...data,
+                    profilePicture: reader.result as string, // base64 image string
+                  });
+                };
+                reader.readAsDataURL(file);
+              }
+            }}
+            className="w-full px-4 py-2 border bg-black/20 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          />
+          {/* Profile Picture Preview */}
+          {data.profilePicture && (
+            <img
+              src={data.profilePicture}
+              alt="Profile"
+              className="w-24 h-24 object-cover rounded-full mt-2 border border-gray-300"
+            />
+          )}
+        </div>
+
+        {/* Full Name */}
         <div>
           <label className="block text-sm font-medium text-white mb-1">
             Full Name
@@ -36,6 +71,7 @@ export const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
           />
         </div>
 
+        {/* Email */}
         <div>
           <label className="block text-sm font-medium text-white mb-1">
             <Mail className="w-4 h-4 inline mr-1" />
@@ -50,6 +86,7 @@ export const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
           />
         </div>
 
+        {/* Phone */}
         <div>
           <label className="block text-sm font-medium text-white mb-1">
             <Phone className="w-4 h-4 inline mr-1" />
@@ -60,9 +97,11 @@ export const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
             value={data.phone}
             onChange={(e) => handleChange("phone", e.target.value)}
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            placeholder="Your phone number"
           />
         </div>
 
+        {/* Address */}
         <div>
           <label className="block text-sm font-medium text-white mb-1">
             <MapPin className="w-4 h-4 inline mr-1" />
@@ -77,6 +116,7 @@ export const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
           />
         </div>
 
+        {/* Summary */}
         <div>
           <label className="block text-sm font-medium text-white mb-1">
             <FileText className="w-4 h-4 inline mr-1" />
