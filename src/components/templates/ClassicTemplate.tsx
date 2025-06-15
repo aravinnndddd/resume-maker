@@ -35,12 +35,20 @@ export const ClassicTemplate: React.FC<ClassicTemplateProps> = ({ data }) => {
     <div className="bg-white p-8 min-h-[11in] font-serif">
       {/* Header */}
       <div className="text-center mb-8 border-b-2 border-gray-800 pb-4">
-        <img
-          src={data.personalInfo.profilePicture}
-          alt="Profile picture"
-          className="w-[200px] h-[200px] rounded-full mx-auto mb-4 object-cover"
-          style={{ objectFit: "cover", borderRadius: "50%" }}
-        />
+        {data.personalInfo.profilePicture && (
+          <img
+            src={data.personalInfo.profilePicture}
+            alt="Profile"
+            className="block rounded-full mx-auto mb-4 object-cover"
+            style={{
+              objectFit: "cover",
+              borderRadius: "50%",
+              width: "150px",
+              height: "150px",
+            }}
+          />
+        )}
+
         <h1 className="text-3xl font-bold text-gray-900 mb-2">
           {data.personalInfo.fullName || "Your Name"}
         </h1>
