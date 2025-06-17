@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import { Education } from "../../types";
 import { GraduationCap, Plus, Trash2, Calendar } from "lucide-react";
+import Select from "react-select";
 
 interface EducationFormProps {
   education: Education[];
@@ -18,6 +19,7 @@ export const EducationForm: React.FC<EducationFormProps> = ({
       degree: "",
       field: "",
       graduationDate: "",
+      currentlyStudying: false,
       gpa: "",
     };
     updateEducation([...education, newEducation]);
@@ -26,7 +28,7 @@ export const EducationForm: React.FC<EducationFormProps> = ({
   const updateEducationItem = (
     id: string,
     field: keyof Education,
-    value: string
+    value: string | boolean
   ) => {
     const updated = education.map((edu) =>
       edu.id === id ? { ...edu, [field]: value } : edu
@@ -37,6 +39,26 @@ export const EducationForm: React.FC<EducationFormProps> = ({
   const removeEducation = (id: string) => {
     updateEducation(education.filter((edu) => edu.id !== id));
   };
+
+  const degreeOptions = [
+    { value: "Bachelor's", label: "Bachelor's" },
+    { value: "Master's", label: "Master's" },
+    { value: "PhD", label: "PhD" },
+    { value: "Diploma", label: "Diploma" },
+    { value: "Associate Degree", label: "Associate Degree" },
+    { value: "High School", label: "High School" },
+  ];
+
+  const fieldOptions = [
+    { value: "Computer Science", label: "Computer Science" },
+    { value: "Information Technology", label: "Information Technology" },
+    { value: "Electronics", label: "Electronics" },
+    { value: "Mechanical Engineering", label: "Mechanical Engineering" },
+    { value: "Civil Engineering", label: "Civil Engineering" },
+    { value: "Business Administration", label: "Business Administration" },
+    { value: "Arts", label: "Arts" },
+    { value: "Mathematics", label: "Mathematics" },
+  ];
 
   return (
     <div className="mb-8">
@@ -52,6 +74,7 @@ export const EducationForm: React.FC<EducationFormProps> = ({
           <Plus className="w-4 h-4 mr-1" />
           Add Education
         </button>
+        {/* Add Education*/}
       </div>
 
       <div className="space-y-6">
@@ -90,14 +113,18 @@ export const EducationForm: React.FC<EducationFormProps> = ({
                 <label className="block text-sm font-medium text-white mb-1">
                   Degree
                 </label>
-                <input
-                  type="text"
-                  value={edu.degree}
-                  onChange={(e) =>
-                    updateEducationItem(edu.id, "degree", e.target.value)
+                <Select
+                  options={degreeOptions}
+                  value={degreeOptions.find(
+                    (option) => option.value === edu.degree
+                  )}
+                  onChange={(selected) =>
+                    updateEducationItem(edu.id, "degree", selected?.value || "")
                   }
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  placeholder="Bachelor's, Master's, PhD, etc."
+                  className="text-black"
+                  classNamePrefix="react-select"
+                  placeholder="Select or type degree"
+                  isClearable
                 />
               </div>
             </div>
@@ -107,14 +134,18 @@ export const EducationForm: React.FC<EducationFormProps> = ({
                 <label className="block text-sm font-medium text-white mb-1">
                   Field of Study
                 </label>
-                <input
-                  type="text"
-                  value={edu.field}
-                  onChange={(e) =>
-                    updateEducationItem(edu.id, "field", e.target.value)
+                <Select
+                  options={fieldOptions}
+                  value={fieldOptions.find(
+                    (option) => option.value === edu.field
+                  )}
+                  onChange={(selected) =>
+                    updateEducationItem(edu.id, "field", selected?.value || "")
                   }
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  placeholder="Computer Science, Business, etc."
+                  className="text-black"
+                  classNamePrefix="react-select"
+                  placeholder="Select or type field"
+                  isClearable
                 />
               </div>
 
@@ -133,8 +164,26 @@ export const EducationForm: React.FC<EducationFormProps> = ({
                       e.target.value
                     )
                   }
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  disabled={edu.currentlyStudying}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-200"
                 />
+                <label className="flex items-center mt-2">
+                  <input
+                    type="checkbox"
+                    checked={edu.currentlyStudying || false}
+                    onChange={(e) =>
+                      updateEducationItem(
+                        edu.id,
+                        "currentlyStudying",
+                        e.target.checked
+                      )
+                    }
+                    className="mr-2"
+                  />
+                  <span className="text-sm text-white">
+                    Currently studying here
+                  </span>
+                </label>
               </div>
             </div>
 
@@ -150,7 +199,7 @@ export const EducationForm: React.FC<EducationFormProps> = ({
                     updateEducationItem(edu.id, "gpa", e.target.value)
                   }
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  placeholder="3.8/4.0"
+                  placeholder="e.g. 3.8/4.0"
                 />
               </div>
             </div>

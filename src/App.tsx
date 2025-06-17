@@ -76,7 +76,7 @@ function App() {
         />
 
         {/* Main Content */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 h-[calc(100vh-200px)]">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 h-[170vh]">
           {/* Form Section */}
           <div className="overflow-hidden">
             <ResumeForm data={resumeData} updateData={updateResumeData} />

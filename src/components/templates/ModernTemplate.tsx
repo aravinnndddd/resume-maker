@@ -39,12 +39,19 @@ export const ModernTemplate: React.FC<ModernTemplateProps> = ({ data }) => {
         {/* Left Column */}
         <div className="w-1/3 bg-gradient-to-b from-blue-600 to-blue-800 text-white p-8">
           <div className="mb-8">
-            <img
-              src={data.personalInfo.profilePicture}
-              alt="Profile picture"
-              className="w-[200px] h-[200px] rounded-full mx-auto mb-4 object-cover"
-              style={{ objectFit: "cover", borderRadius: "50%" }}
-            />
+            {data.personalInfo.profilePicture && (
+              <img
+                src={data.personalInfo.profilePicture}
+                alt="Profile"
+                className="block rounded-full mx-auto mb-4 object-cover"
+                style={{
+                  objectFit: "cover",
+                  borderRadius: "50%",
+                  width: "150px",
+                  height: "150px",
+                }}
+              />
+            )}
             <h1 className="text-2xl font-bold mb-4">
               {data.personalInfo.fullName || "Your Name"}
             </h1>

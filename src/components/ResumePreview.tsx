@@ -76,7 +76,7 @@ export const ResumePreview: React.FC<ResumePreviewProps> = ({
 
       {/* Preview Area */}
       {isVisible && (
-        <div className="flex-1 overflow-auto p-4 bg-gray-50">
+        <div className="flex-1 overflow-hidden p-4 bg-gray-50">
           <div className="max-w-[8.5in] mx-auto bg-white shadow-lg">
             <div ref={componentRef} className="w-full">
               {renderTemplate()}

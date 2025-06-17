@@ -75,12 +75,19 @@ export const ExecutiveTemplate: React.FC<ExecutiveTemplateProps> = ({
       {/* Header */}
       <div className="border-b-4 border-gray-800 pb-6 mb-8">
         <div className="text-center mb-6">
-          <img
-            src={data.personalInfo.profilePicture}
-            alt="Profile picture"
-            className="w-[200px] h-[200px] rounded-full mx-auto mb-4 object-cover"
-            style={{ objectFit: "cover", borderRadius: "50%" }}
-          />
+          {data.personalInfo.profilePicture && (
+            <img
+              src={data.personalInfo.profilePicture}
+              alt="Profile"
+              className="block rounded-full mx-auto mb-4 object-cover"
+              style={{
+                objectFit: "cover",
+                borderRadius: "50%",
+                width: "150px",
+                height: "150px",
+              }}
+            />
+          )}
           <h1 className="text-4xl font-bold text-gray-900 mb-2 tracking-wide">
             {data.personalInfo.fullName || "Your Name"}
           </h1>

@@ -156,17 +156,19 @@ export const ExperienceForm: React.FC<ExperienceFormProps> = ({
 
             <div>
               <label className="block text-sm font-medium text-white mb-1">
-                Job Description
+                Job Description{" "}
               </label>
-              <textarea
-                value={exp.description}
-                onChange={(e) =>
-                  updateExperience(exp.id, "description", e.target.value)
-                }
-                rows={3}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
-                placeholder="Describe your responsibilities and achievements..."
-              />
+              <div>
+                <textarea
+                  value={exp.description}
+                  onChange={(e) =>
+                    updateExperience(exp.id, "description", e.target.value)
+                  }
+                  rows={5}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-y"
+                  placeholder={`e.g.\n• Developed RESTful APIs for internal tools\n• Collaborated with frontend team to integrate UI`}
+                />
+              </div>
             </div>
           </div>
         ))}

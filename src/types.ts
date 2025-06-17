@@ -21,6 +21,7 @@ export interface Education {
   id: string;
   institution: string;
   degree: string;
+  currentlyStudying: boolean;
   field: string;
   graduationDate: string;
   gpa?: string;
