@@ -1,0 +1,39 @@
+.body {
+  min-height: screen;
+
+  background-image: radial-gradient(black, rgb(70, 70, 70));
+}
+.header {
+  padding: 20px 10%;
+  color: white;
+  font-weight: bold;
+  font-size: 25px;
+  background: rgb(36, 36, 36);
+  display: flex;
+  justify-content: space-between;
+  gap: 5px;
+  align-items: center;
+}
+.footer {
+  height: 10vh;
+  background-color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+
+.form_prev {
+  display: flex;
+
+  height: max-content;
+  flex-direction: column;
+
+  columns: 2;
+}
+.form_prev > div {
+  display: flex;
+}
+/* .prevVisible {
+  margin: 10px;
+} */

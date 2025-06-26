@@ -5,7 +5,7 @@ import { ExperienceForm } from "./forms/ExperienceForm";
 import { EducationForm } from "./forms/EducationForm";
 import { ProjectForm } from "./forms/ProjectForm";
 import { SkillsForm } from "./forms/SkillsForm";
-
+import style from "./styles/Form/form.module.css";
 interface ResumeFormProps {
   data: ResumeData;
   updateData: (data: ResumeData) => void;
@@ -13,8 +13,8 @@ interface ResumeFormProps {
 
 export const ResumeForm: React.FC<ResumeFormProps> = ({ data, updateData }) => {
   return (
-    <div className="bg-black/50 rounded-lg shadow-sm p-6 h-full overflow-y-auto">
-      <h2 className="text-2xl font-bold text-white mb-6">Resume Builder</h2>
+    <div className={style.formBody}>
+      <h2>Resume Builder</h2>
 
       <PersonalInfoForm
         data={data.personalInfo}

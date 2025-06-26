@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { ResumeForm } from "./components/ResumeForm";
 import { ResumePreview } from "./components/ResumePreview";
 import { TemplateSelector } from "./components/TemplateSelector";
 import { ResumeData, TemplateType } from "./types";
 import { FileText } from "lucide-react";
+import style from "./components/styles/Main/app.module.css";
 
 const initialData: ResumeData = {
   personalInfo: {
@@ -57,48 +58,32 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-black/70">
-      {/* Header */}
-      <header className="bg-white/20 shadow-sm border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="flex items-center">
-            <FileText className="w-8 h-8 text-white mr-3" />
-            <h1 className="text-2xl font-bold text-white">Resume Builder</h1>
-          </div>
-        </div>
-      </header>
+    <div className={style.body}>
+      <div className={style.header}>
+        <span style={{ display: "flex" }}>
+          <FileText size={40} color="white" />
+          <h1>Resume builder</h1>
+        </span>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Template Selector */}
         <TemplateSelector
           selectedTemplate={selectedTemplate}
           onTemplateChange={setSelectedTemplate}
         />
+      </div>
 
-        {/* Main Content */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 h-[170vh]">
-          {/* Form Section */}
-          <div className="overflow-hidden">
-            <ResumeForm data={resumeData} updateData={updateResumeData} />
-          </div>
-
-          {/* Preview Section */}
-          <div className="overflow-hidden">
-            <ResumePreview
-              data={resumeData}
-              selectedTemplate={selectedTemplate}
-            />
-          </div>
+      <div className={style.form_prev}>
+        <div>
+          <ResumeForm data={resumeData} updateData={updateResumeData} />{" "}
+          <ResumePreview
+            data={resumeData}
+            selectedTemplate={selectedTemplate}
+          />
         </div>
       </div>
 
       {/* Footer */}
-      <footer className="bg-black/50 border-t border-gray-200 mt-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="text-center text-white text-sm">
-            <p>Create professional resumes with ease.</p>
-          </div>
-        </div>
+      <footer className={style.footer}>
+        <p>Create professional resumes with ease.</p>
       </footer>
     </div>
   );

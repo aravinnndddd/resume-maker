@@ -6,7 +6,7 @@ import { ClassicTemplate } from "./templates/ClassicTemplate";
 import { ModernTemplate } from "./templates/ModernTemplate";
 
 import { ExecutiveTemplate } from "./templates/ExecutiveTemplate";
-
+import style from "./styles/Form/form.module.css";
 interface ResumePreviewProps {
   data: ResumeData;
   selectedTemplate: TemplateType;
@@ -52,10 +52,10 @@ export const ResumePreview: React.FC<ResumePreviewProps> = ({
     setIsVisible((prev) => !prev);
   };
   return (
-    <div className="bg-transparent rounded-lg shadow-sm b h-full flex flex-col">
+    <div className={style.prevBody}>
       {/* Header with Download Button */}
-      <div className="p-4 border-b border-gray-200 flex justify-between items-center">
-        <h3 className="text-white font-bold text-lg flex  gap-3">
+      <div className={style.prevHeader}>
+        <h3 className={style.prevHeading}>
           <InfoIcon
             color="white"
             size={30}
@@ -65,25 +65,14 @@ export const ResumePreview: React.FC<ResumePreviewProps> = ({
           Resume Preview
         </h3>
 
-        <button
-          onClick={handlePrint}
-          className="flex items-center px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition-colors font-medium"
-        >
-          <Download className="w-4 h-4 mr-2" />
+        <button onClick={handlePrint} className={style.downloadBtn}>
+          <Download size={20} style={{ margin: "5px" }} />
           Download PDF
         </button>
       </div>
 
       {/* Preview Area */}
-      {isVisible && (
-        <div className="flex-1 overflow-hidden p-4 bg-gray-50">
-          <div className="max-w-[8.5in] mx-auto bg-white shadow-lg">
-            <div ref={componentRef} className="w-full">
-              {renderTemplate()}
-            </div>
-          </div>
-        </div>
-      )}
+      {isVisible && <div ref={componentRef}>{renderTemplate()}</div>}
     </div>
   );
 };
