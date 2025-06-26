@@ -203,10 +203,6 @@
   transition: color 0.2s;
 }
 
-.projectLink:hover {
-  color: #1f2937;
-}
-
 .projectTech {
   font-size: 0.875rem;
   color: #4b5563;
@@ -265,8 +261,4 @@
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.3s ease-in-out;
-}
-
-.skillBox:hover .tooltip {
-  opacity: 1;
 }
