@@ -2,6 +2,7 @@ import React from "react";
 import { Education } from "../../types";
 import { GraduationCap, Plus, Trash2, Calendar } from "lucide-react";
 import Select from "react-select";
+import styles from "../styles/Form/edu.module.css";
 
 interface EducationFormProps {
   education: Education[];
@@ -61,58 +62,47 @@ export const EducationForm: React.FC<EducationFormProps> = ({
   ];
 
   return (
-    <div className="mb-8">
-      <div className="flex items-center justify-between mb-4">
-        <h3 className="text-lg font-semibold text-white flex items-center">
-          <GraduationCap className="w-5 h-5 mr-2 text-white" />
+    <div className={styles.container}>
+      <div className={styles.header}>
+        <h3 className={styles.title}>
+          <GraduationCap className={styles.icon} />
           Education
         </h3>
-        <button
-          onClick={addEducation}
-          className="flex items-center px-3 py-1 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors text-sm"
-        >
-          <Plus className="w-4 h-4 mr-1" />
+        <button onClick={addEducation} className={styles.addButton}>
+          <Plus className={styles.iconSmall} />
           Add Education
         </button>
-        {/* Add Education*/}
       </div>
 
-      <div className="space-y-6">
+      <div className={styles.entries}>
         {education.map((edu) => (
-          <div
-            key={edu.id}
-            className="p-4 border border-gray-200 rounded-lg bg-white/40"
-          >
-            <div className="flex justify-between items-start mb-4">
-              <h4 className="font-medium text-white">Education Entry</h4>
+          <div key={edu.id} className={styles.entry}>
+            <div className={styles.entryHeader}>
+              <h4 className={styles.entryTitle}>Education Entry</h4>
               <button
                 onClick={() => removeEducation(edu.id)}
-                className="text-red-600 hover:text-red-800 transition-colors"
+                className={styles.removeButton}
               >
-                <Trash2 className="w-4 h-4" />
+                <Trash2 className={styles.iconSmall} />
               </button>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+            <div className={styles.grid}>
               <div>
-                <label className="block text-sm font-medium text-white mb-1">
-                  Institution
-                </label>
+                <label className={styles.label}>Institution</label>
                 <input
                   type="text"
                   value={edu.institution}
                   onChange={(e) =>
                     updateEducationItem(edu.id, "institution", e.target.value)
                   }
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className={styles.input}
                   placeholder="University Name"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-white mb-1">
-                  Degree
-                </label>
+                <label className={styles.label}>Degree</label>
                 <Select
                   options={degreeOptions}
                   value={degreeOptions.find(
@@ -121,7 +111,7 @@ export const EducationForm: React.FC<EducationFormProps> = ({
                   onChange={(selected) =>
                     updateEducationItem(edu.id, "degree", selected?.value || "")
                   }
-                  className="text-black"
+                  className={styles.select}
                   classNamePrefix="react-select"
                   placeholder="Select or type degree"
                   isClearable
@@ -129,11 +119,9 @@ export const EducationForm: React.FC<EducationFormProps> = ({
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+            <div className={styles.grid}>
               <div>
-                <label className="block text-sm font-medium text-white mb-1">
-                  Field of Study
-                </label>
+                <label className={styles.label}>Field of Study</label>
                 <Select
                   options={fieldOptions}
                   value={fieldOptions.find(
@@ -142,7 +130,7 @@ export const EducationForm: React.FC<EducationFormProps> = ({
                   onChange={(selected) =>
                     updateEducationItem(edu.id, "field", selected?.value || "")
                   }
-                  className="text-black"
+                  className={styles.select}
                   classNamePrefix="react-select"
                   placeholder="Select or type field"
                   isClearable
@@ -150,8 +138,8 @@ export const EducationForm: React.FC<EducationFormProps> = ({
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-white mb-1">
-                  <Calendar className="w-4 h-4 inline mr-1" />
+                <label className={styles.label}>
+                  <Calendar className={styles.iconInline} />
                   Graduation Date
                 </label>
                 <input
@@ -165,9 +153,9 @@ export const EducationForm: React.FC<EducationFormProps> = ({
                     )
                   }
                   disabled={edu.currentlyStudying}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-200"
+                  className={styles.input}
                 />
-                <label className="flex items-center mt-2">
+                <label className={styles.checkboxLabel}>
                   <input
                     type="checkbox"
                     checked={edu.currentlyStudying || false}
@@ -178,39 +166,33 @@ export const EducationForm: React.FC<EducationFormProps> = ({
                         e.target.checked
                       )
                     }
-                    className="mr-2"
+                    className={styles.checkbox}
                   />
-                  <span className="text-sm text-white">
-                    Currently studying here
-                  </span>
+                  Currently studying here
                 </label>
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm font-medium text-white mb-1">
-                  GPA (Optional)
-                </label>
-                <input
-                  type="text"
-                  value={edu.gpa || ""}
-                  onChange={(e) =>
-                    updateEducationItem(edu.id, "gpa", e.target.value)
-                  }
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  placeholder="e.g. 3.8/4.0"
-                />
-              </div>
+            <div>
+              <label className={styles.label}>GPA (Optional)</label>
+              <input
+                type="text"
+                value={edu.gpa || ""}
+                onChange={(e) =>
+                  updateEducationItem(edu.id, "gpa", e.target.value)
+                }
+                className={styles.input}
+                placeholder="e.g. 3.8/4.0"
+              />
             </div>
           </div>
         ))}
 
         {education.length === 0 && (
-          <div className="text-center py-8 text-gray-500">
-            <GraduationCap className="w-12 h-12 mx-auto mb-2 text-gray-300" />
+          <div className={styles.empty}>
+            <GraduationCap className={styles.iconLarge} />
             <p>No education added yet.</p>
-            <p className="text-sm">Click "Add Education" to get started.</p>
+            <p>Click "Add Education" to get started.</p>
           </div>
         )}
       </div>

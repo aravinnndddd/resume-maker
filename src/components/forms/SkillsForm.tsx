@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Skill } from "../../types";
 import { Award, Plus, Trash2, Star } from "lucide-react";
+import styles from "../styles/Form/skill.module.css";
 
 interface SkillsFormProps {
   skills: Skill[];
@@ -44,13 +45,13 @@ export const SkillsForm: React.FC<SkillsFormProps> = ({
     interactive = false
   ) => {
     return (
-      <div className="flex items-center space-x-1">
+      <div className={styles.stars}>
         {[1, 2, 3, 4, 5].map((star) => (
           <Star
             key={star}
-            className={`w-4 h-4 ${
-              star <= level ? "text-yellow-500 fill-current" : "text-gray-300"
-            } ${interactive ? "cursor-pointer hover:text-yellow-400" : ""}`}
+            className={`${styles.star} ${
+              star <= level ? styles.starFilled : styles.starEmpty
+            } ${interactive ? styles.starInteractive : ""}`}
             onClick={
               interactive && skillId
                 ? () => updateSkillLevel(skillId, star)
@@ -80,38 +81,34 @@ export const SkillsForm: React.FC<SkillsFormProps> = ({
   };
 
   return (
-    <div className="mb-8">
-      <h3 className="text-lg font-semibold text-white mb-4 flex items-center">
-        <Award className="w-5 h-5 mr-2 text-white" />
+    <div className={styles.container}>
+      <h3 className={styles.heading}>
+        <Award className={styles.icon} />
         Skills
       </h3>
 
       {/* Add New Skill */}
-      <div className="mb-6 p-4 border border-gray-200 rounded-lg bg-white/40">
-        <h4 className="font-medium text-white mb-3">Add New Skill</h4>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="md:col-span-2">
-            <label className="block text-sm font-medium text-white mb-1">
-              Skill Name
-            </label>
+      <div className={styles.addBox}>
+        <h4 className={styles.subheading}>Add New Skill</h4>
+        <div className={styles.grid}>
+          <div className={styles.colSpanTwo}>
+            <label className={styles.label}>Skill Name</label>
             <input
               type="text"
               value={newSkillName}
               onChange={(e) => setNewSkillName(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              placeholder="e.g., JavaScript, Project Management, etc."
               onKeyPress={(e) => e.key === "Enter" && addSkill()}
+              className={styles.input}
+              placeholder="e.g., JavaScript, Project Management, etc."
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-white mb-1">
-              Proficiency Level
-            </label>
-            <div className="space-y-2">
+            <label className={styles.label}>Proficiency Level</label>
+            <div className={styles.levelSelect}>
               <select
                 value={newSkillLevel}
                 onChange={(e) => setNewSkillLevel(Number(e.target.value))}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className={styles.input}
               >
                 <option value={1}>1 - Beginner</option>
                 <option value={2}>2 - Novice</option>
@@ -119,54 +116,45 @@ export const SkillsForm: React.FC<SkillsFormProps> = ({
                 <option value={4}>4 - Advanced</option>
                 <option value={5}>5 - Expert</option>
               </select>
-              <div className="flex items-center justify-center">
-                {renderStars(newSkillLevel)}
-              </div>
+              {renderStars(newSkillLevel)}
             </div>
           </div>
         </div>
         <button
           onClick={addSkill}
           disabled={!newSkillName.trim()}
-          className="mt-3 flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
+          className={styles.addButton}
         >
-          <Plus className="w-4 h-4 mr-1" />
+          <Plus className={styles.iconSmall} />
           Add Skill
         </button>
       </div>
 
       {/* Skills List */}
-      <div className="space-y-3">
+      <div className={styles.skillList}>
         {skills.map((skill) => (
-          <div
-            key={skill.id}
-            className="flex items-center justify-between p-3 bg-white border border-gray-200 rounded-lg hover:shadow-sm transition-shadow"
-          >
-            <div className="flex items-center space-x-4 flex-grow">
-              <div className="flex-grow">
-                <h5 className="font-medium text-gray-800">{skill.name}</h5>
-                <p className="text-sm text-gray-600">
-                  {getLevelText(skill.level)}
-                </p>
+          <div key={skill.id} className={styles.skillCard}>
+            <div className={styles.skillInfo}>
+              <div className={styles.skillText}>
+                <h5 className={styles.skillName}>{skill.name}</h5>
+                <p className={styles.skillLevel}>{getLevelText(skill.level)}</p>
               </div>
-              <div className="flex items-center space-x-2">
-                {renderStars(skill.level, skill.id, true)}
-              </div>
+              {renderStars(skill.level, skill.id, true)}
             </div>
             <button
               onClick={() => removeSkill(skill.id)}
-              className="ml-4 text-red-600 hover:text-red-800 transition-colors"
+              className={styles.removeButton}
             >
-              <Trash2 className="w-4 h-4" />
+              <Trash2 className={styles.iconSmall} />
             </button>
           </div>
         ))}
 
         {skills.length === 0 && (
-          <div className="text-center py-8 text-gray-500">
-            <Award className="w-12 h-12 mx-auto mb-2 text-gray-300" />
+          <div className={styles.emptyState}>
+            <Award className={styles.emptyIcon} />
             <p>No skills added yet.</p>
-            <p className="text-sm">
+            <p className={styles.emptySubtext}>
               Add your first skill above to get started.
             </p>
           </div>

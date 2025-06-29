@@ -1,6 +1,7 @@
 import React from "react";
 import { PersonalInfo } from "../../types";
 import { User, Mail, Phone, MapPin, FileText, ImageIcon } from "lucide-react";
+import styles from "../styles/Form/pers.module.css";
 
 interface PersonalInfoFormProps {
   data: PersonalInfo;
@@ -16,17 +17,17 @@ export const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
   };
 
   return (
-    <div className="mb-8">
-      <h3 className="text-lg font-semibold text-white mb-4 flex items-center">
-        <User className="w-5 h-5 mr-2 text-white" />
+    <div className={styles.container}>
+      <h3 className={styles.heading}>
+        <User className={styles.icon} />
         Personal Information
       </h3>
 
-      <div className="space-y-4">
+      <div className={styles.formGroup}>
         {/* Profile Picture Upload */}
         <div>
-          <label className="block text-sm font-medium text-white mb-1">
-            <ImageIcon className="w-4 h-4 inline mr-1" />
+          <label className={styles.label}>
+            <ImageIcon className={styles.iconInline} />
             Profile Picture
           </label>
           <input
@@ -39,94 +40,91 @@ export const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
                 reader.onloadend = () => {
                   updateData({
                     ...data,
-                    profilePicture: reader.result as string, // base64 image string
+                    profilePicture: reader.result as string,
                   });
                 };
                 reader.readAsDataURL(file);
               }
             }}
-            className="w-full px-4 py-2 border bg-black/20 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className={`${styles.inputFile}`}
           />
-          {/* Profile Picture Preview */}
           {data.profilePicture && (
             <img
               src={data.profilePicture}
               alt="Profile"
-              className="w-24 h-24 object-cover rounded-full mt-2 border border-gray-300"
+              className={styles.profilePreview}
             />
           )}
         </div>
 
         {/* Full Name */}
         <div>
-          <label className="block text-sm font-medium text-white mb-1">
-            Full Name
-          </label>
+          <label className={styles.label}>Full Name</label>
           <input
             type="text"
             value={data.fullName}
             onChange={(e) => handleChange("fullName", e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className={styles.input}
             placeholder="Enter your full name"
           />
         </div>
 
         {/* Email */}
         <div>
-          <label className="block text-sm font-medium text-white mb-1">
-            <Mail className="w-4 h-4 inline mr-1" />
+          <label className={styles.label}>
+            <Mail className={styles.iconInline} />
             Email
           </label>
           <input
             type="email"
             value={data.email}
             onChange={(e) => handleChange("email", e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className={styles.input}
             placeholder="example@example.com"
           />
         </div>
 
         {/* Phone */}
         <div>
-          <label className="block text-sm font-medium text-white mb-1">
-            <Phone className="w-4 h-4 inline mr-1" />
+          <label className={styles.label}>
+            <Phone className={styles.iconInline} />
             Phone
           </label>
           <input
             type="tel"
             value={data.phone}
             onChange={(e) => handleChange("phone", e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className={styles.input}
             placeholder="Your phone number"
           />
         </div>
 
         {/* Address */}
         <div>
-          <label className="block text-sm font-medium text-white mb-1">
-            <MapPin className="w-4 h-4 inline mr-1" />
+          <label className={styles.label}>
+            <MapPin className={styles.iconInline} />
             Address
           </label>
           <input
             type="text"
             value={data.address}
             onChange={(e) => handleChange("address", e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className={styles.input}
             placeholder="City, State, Country"
           />
         </div>
 
         {/* Summary */}
         <div>
-          <label className="block text-sm font-medium text-white mb-1">
-            <FileText className="w-4 h-4 inline mr-1" />
+          <label className={styles.label}>
+            <FileText className={styles.iconInline} />
             Professional Summary
           </label>
           <textarea
             value={data.summary}
             onChange={(e) => handleChange("summary", e.target.value)}
             rows={4}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+            className={`${styles.input} ${styles.textarea}`}
             placeholder="Write a brief professional summary highlighting your key skills and experience..."
           />
         </div>

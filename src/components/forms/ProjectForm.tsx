@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import { Project } from "../../types";
 import { Code, Plus, Trash2, ExternalLink } from "lucide-react";
+import styles from "../styles/Form/proj.module.css";
 
 interface ProjectFormProps {
   projects: Project[];
@@ -34,56 +35,48 @@ export const ProjectForm: React.FC<ProjectFormProps> = ({
   };
 
   return (
-    <div className="mb-8">
-      <div className="flex items-center justify-between mb-4">
-        <h3 className="text-lg font-semibold text-white flex items-center">
-          <Code className="w-5 h-5 mr-2 text-white" />
+    <div className={styles.container}>
+      <div className={styles.header}>
+        <h3 className={styles.title}>
+          <Code className={styles.icon} />
           Projects
         </h3>
-        <button
-          onClick={addProject}
-          className="flex items-center px-3 py-1 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors text-sm"
-        >
-          <Plus className="w-4 h-4 mr-1" />
+        <button onClick={addProject} className={styles.addButton}>
+          <Plus className={styles.iconSmall} />
           Add Project
         </button>
       </div>
 
-      <div className="space-y-6">
+      <div className={styles.entries}>
         {projects.map((project) => (
-          <div
-            key={project.id}
-            className="p-4 border border-gray-200 rounded-lg bg-white/40"
-          >
-            <div className="flex justify-between items-start mb-4">
-              <h4 className="font-medium text-white">Project Entry</h4>
+          <div key={project.id} className={styles.entry}>
+            <div className={styles.entryHeader}>
+              <h4 className={styles.entryTitle}>Project Entry</h4>
               <button
                 onClick={() => removeProject(project.id)}
-                className="text-red-600 hover:text-red-800 transition-colors"
+                className={styles.removeButton}
               >
-                <Trash2 className="w-4 h-4" />
+                <Trash2 className={styles.iconSmall} />
               </button>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+            <div className={styles.grid}>
               <div>
-                <label className="block text-sm font-medium text-white mb-1">
-                  Project Name
-                </label>
+                <label className={styles.label}>Project Name</label>
                 <input
                   type="text"
                   value={project.name}
                   onChange={(e) =>
                     updateProject(project.id, "name", e.target.value)
                   }
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className={styles.input}
                   placeholder="My Awesome Project"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-white mb-1">
-                  <ExternalLink className="w-4 h-4 inline mr-1" />
+                <label className={styles.label}>
+                  <ExternalLink className={styles.iconInline} />
                   Project Link (Optional)
                 </label>
                 <input
@@ -92,38 +85,34 @@ export const ProjectForm: React.FC<ProjectFormProps> = ({
                   onChange={(e) =>
                     updateProject(project.id, "link", e.target.value)
                   }
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className={styles.input}
                   placeholder="https://github.com/username/project"
                 />
               </div>
             </div>
 
-            <div className="mb-4">
-              <label className="block text-sm font-medium text-white mb-1">
-                Technologies Used
-              </label>
+            <div className={styles.section}>
+              <label className={styles.label}>Technologies Used</label>
               <input
                 type="text"
                 value={project.technologies}
                 onChange={(e) =>
                   updateProject(project.id, "technologies", e.target.value)
                 }
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className={styles.input}
                 placeholder="React, TypeScript, Node.js, MongoDB"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-white mb-1">
-                Project Description
-              </label>
+              <label className={styles.label}>Project Description</label>
               <textarea
                 value={project.description}
                 onChange={(e) =>
                   updateProject(project.id, "description", e.target.value)
                 }
                 rows={3}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+                className={`${styles.input} ${styles.textarea}`}
                 placeholder="Describe what this project does and your role in it..."
               />
             </div>
@@ -131,10 +120,12 @@ export const ProjectForm: React.FC<ProjectFormProps> = ({
         ))}
 
         {projects.length === 0 && (
-          <div className="text-center py-8 text-gray-500">
-            <Code className="w-12 h-12 mx-auto mb-2 text-gray-300" />
+          <div className={styles.empty}>
+            <Code className={styles.iconLarge} />
             <p>No projects added yet.</p>
-            <p className="text-sm">Click "Add Project" to get started.</p>
+            <p className={styles.subtext}>
+              Click "Add Project" to get started.
+            </p>
           </div>
         )}
       </div>
