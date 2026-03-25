@@ -1,10 +1,16 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { ResumeForm } from "./components/ResumeForm";
 import { ResumePreview } from "./components/ResumePreview";
 import { TemplateSelector } from "./components/TemplateSelector";
 import { ResumeData, TemplateType } from "./types";
-import { FileText } from "lucide-react";
-import style from "./components/styles/Main/app.module.css";
+import { FileText, Check, Palette } from "lucide-react";
+import "./App.css";
+
+const ACCENT_COLORS = [
+  "#6366f1", "#8b5cf6", "#ec4899", "#f43f5e",
+  "#f97316", "#eab308", "#22c55e", "#06b6d4",
+  "#3b82f6", "#64748b",
+];
 
 const initialData: ResumeData = {
   personalInfo: {
@@ -23,68 +29,104 @@ const initialData: ResumeData = {
 
 function App() {
   const [resumeData, setResumeData] = useState<ResumeData>(initialData);
-  const [selectedTemplate, setSelectedTemplate] =
-    useState<TemplateType>("classic");
+  const [selectedTemplate, setSelectedTemplate] = useState<TemplateType>("classic");
+  const [accentColor, setAccentColor] = useState("#6366f1");
+  const [zoom, setZoom] = useState(0.55);
+  const [saved, setSaved] = useState(false);
+  const [showColorPicker, setShowColorPicker] = useState(false);
 
-  // Load data from localStorage on component mount
+  // Load from localStorage
   useEffect(() => {
     const savedData = localStorage.getItem("resumeBuilderData");
     if (savedData) {
-      try {
-        setResumeData(JSON.parse(savedData));
-      } catch (error) {
-        console.error("Error loading saved data:", error);
-      }
+      try { setResumeData(JSON.parse(savedData)); } catch {}
     }
-
     const savedTemplate = localStorage.getItem("resumeBuilderTemplate");
-    if (savedTemplate) {
-      setSelectedTemplate(savedTemplate as TemplateType);
-    }
+    if (savedTemplate) setSelectedTemplate(savedTemplate as TemplateType);
+    const savedAccent = localStorage.getItem("resumeBuilderAccent");
+    if (savedAccent) setAccentColor(savedAccent);
   }, []);
 
-  // Save data to localStorage whenever it changes
-  useEffect(() => {
+  // Auto-save with indicator
+  const autoSave = useCallback(() => {
     localStorage.setItem("resumeBuilderData", JSON.stringify(resumeData));
-  }, [resumeData]);
-
-  // Save template preference to localStorage
-  useEffect(() => {
     localStorage.setItem("resumeBuilderTemplate", selectedTemplate);
-  }, [selectedTemplate]);
+    localStorage.setItem("resumeBuilderAccent", accentColor);
+    setSaved(true);
+    setTimeout(() => setSaved(false), 1500);
+  }, [resumeData, selectedTemplate, accentColor]);
 
-  const updateResumeData = (data: ResumeData) => {
-    setResumeData(data);
-  };
+  useEffect(() => {
+    const timer = setTimeout(autoSave, 800);
+    return () => clearTimeout(timer);
+  }, [autoSave]);
+
+  // Apply accent color as CSS variable
+  useEffect(() => {
+    document.documentElement.style.setProperty("--accent", accentColor);
+  }, [accentColor]);
 
   return (
-    <div className={style.body}>
-      <div className={style.header}>
-        <span style={{ display: "flex" }}>
-          <FileText size={40} color="white" />
-          <h1>Resume builder</h1>
-        </span>
+    <div className="app-root">
+      {/* ── HEADER ── */}
+      <header className="app-header no-print">
+        <div className="header-left">
+          <div className="logo-mark">
+            <FileText size={22} />
+          </div>
+          <h1 className="logo-text">ResumeForge</h1>
+          {saved && (
+            <span className="save-badge">
+              <Check size={13} /> Saved
+            </span>
+          )}
+        </div>
+        <div className="header-right">
+          {/* Accent color */}
+          <div className="accent-picker-wrap">
+            <button
+              className="icon-btn"
+              onClick={() => setShowColorPicker(!showColorPicker)}
+              title="Accent Color"
+            >
+              <Palette size={18} />
+              <span className="color-dot" style={{ background: accentColor }} />
+            </button>
+            {showColorPicker && (
+              <div className="accent-dropdown">
+                {ACCENT_COLORS.map((c) => (
+                  <button
+                    key={c}
+                    className={`color-swatch ${accentColor === c ? "active" : ""}`}
+                    style={{ background: c }}
+                    onClick={() => { setAccentColor(c); setShowColorPicker(false); }}
+                  />
+                ))}
+              </div>
+            )}
+          </div>
+          <TemplateSelector selectedTemplate={selectedTemplate} onTemplateChange={setSelectedTemplate} />
+        </div>
+      </header>
 
-        <TemplateSelector
-          selectedTemplate={selectedTemplate}
-          onTemplateChange={setSelectedTemplate}
-        />
-      </div>
+      {/* ── MAIN SPLIT ── */}
+      <main className="app-main">
+        {/* LEFT: Form */}
+        <aside className="panel-form no-print">
+          <ResumeForm data={resumeData} updateData={setResumeData} />
+        </aside>
 
-      <div className={style.form_prev}>
-        <div>
-          <ResumeForm data={resumeData} updateData={updateResumeData} />{" "}
+        {/* RIGHT: Preview */}
+        <section className="panel-preview no-print">
           <ResumePreview
             data={resumeData}
             selectedTemplate={selectedTemplate}
+            accentColor={accentColor}
+            zoom={zoom}
+            onZoomChange={setZoom}
           />
-        </div>
-      </div>
-
-      {/* Footer */}
-      <footer className={style.footer}>
-        <p>Create professional resumes with ease.</p>
-      </footer>
+        </section>
+      </main>
     </div>
   );
 }

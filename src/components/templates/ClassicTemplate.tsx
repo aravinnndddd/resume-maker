@@ -1,101 +1,52 @@
 import React from "react";
 import { ResumeData } from "../../types";
-import { Mail, Phone, MapPin, Calendar, Star } from "lucide-react";
-import style from "../styles/templates/classic.module.css";
+import { Mail, Phone, MapPin } from "lucide-react";
+import "./TemplateStyles.css";
 
 interface ClassicTemplateProps {
   data: ResumeData;
+  accentColor: string;
 }
 
-export const ClassicTemplate: React.FC<ClassicTemplateProps> = ({ data }) => {
-  const formatDate = (dateString: string) => {
-    if (!dateString) return "";
-    const date = new Date(dateString);
-    return date.toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "short",
-    });
-  };
-
-  const renderStars = (level: number) => {
-    return (
-      <div className={style.starContainer}>
-        {[1, 2, 3, 4, 5].map((star) => (
-          <Star
-            key={star}
-            className={`${style.star} ${
-              star <= level ? style.starFilled : style.starEmpty
-            }`}
-          />
-        ))}
-      </div>
-    );
+export const ClassicTemplate: React.FC<ClassicTemplateProps> = ({ data, accentColor }) => {
+  const fmt = (d: string) => {
+    if (!d) return "";
+    const date = new Date(d);
+    return date.toLocaleDateString("en-US", { year: "numeric", month: "short" });
   };
 
   return (
-    <div className={style.classicBody}>
+    <div className="classic">
       {/* Header */}
-      <div className={style.classicPersonalInfo}>
-        {data.personalInfo.profilePicture && (
-          <img
-            src={data.personalInfo.profilePicture}
-            alt="Profile"
-            className={style.profileImage}
-          />
-        )}
-
-        <h1 className={style.Fullname}>
-          {data.personalInfo.fullName || "Your Name"}
-        </h1>
-
-        <div className={style.infoDetail}>
-          {data.personalInfo.email && (
-            <div className={style.flexCenter}>
-              <Mail className={style.icon} />
-              {data.personalInfo.email}
-            </div>
-          )}
-          {data.personalInfo.phone && (
-            <div className={style.flexCenter}>
-              <Phone className={style.icon} />
-              {data.personalInfo.phone}
-            </div>
-          )}
-          {data.personalInfo.address && (
-            <div className={style.flexCenter}>
-              <MapPin className={style.icon} />
-              {data.personalInfo.address}
-            </div>
-          )}
+      <div className="header-block" style={{ borderColor: accentColor }}>
+        <div className="name">{data.personalInfo.fullName || "Your Name"}</div>
+        <div className="contact-row">
+          {data.personalInfo.email && <span><Mail />{data.personalInfo.email}</span>}
+          {data.personalInfo.phone && <span><Phone />{data.personalInfo.phone}</span>}
+          {data.personalInfo.address && <span><MapPin />{data.personalInfo.address}</span>}
         </div>
       </div>
 
-      {/* Professional Summary */}
+      {/* Summary */}
       {data.personalInfo.summary && (
-        <div className={style.section}>
-          <h2 className={style.sectionHeading}>PROFESSIONAL SUMMARY</h2>
-          <p className={style.paragraph}>{data.personalInfo.summary}</p>
+        <div className="resume-section">
+          <div className="section-heading">Professional Summary</div>
+          <p className="summary-text">{data.personalInfo.summary}</p>
         </div>
       )}
 
       {/* Experience */}
       {data.experiences.length > 0 && (
-        <div className={style.section}>
-          <h2 className={style.sectionHeading}>PROFESSIONAL EXPERIENCE</h2>
+        <div className="resume-section">
+          <div className="section-heading">Experience</div>
           {data.experiences.map((exp) => (
-            <div key={exp.id} className={style.experienceBlock}>
-              <div className={style.flexBetween}>
-                <h3 className={style.experiencePosition}>{exp.position}</h3>
-                <span className={style.dateText}>
-                  <Calendar className={style.iconSmall} />
-                  {formatDate(exp.startDate)} -{" "}
-                  {exp.current ? "Present" : formatDate(exp.endDate)}
-                </span>
+            <div key={exp.id} className="exp-item">
+              <div className="exp-top">
+                <span className="exp-position">{exp.position}</span>
+                <span className="date-range">{fmt(exp.startDate)} — {exp.current ? "Present" : fmt(exp.endDate)}</span>
               </div>
-              <h4 className={style.experienceCompany}>{exp.company}</h4>
-              {exp.description && (
-                <p className={style.descriptionText}>{exp.description}</p>
-              )}
+              <div className="exp-company">{exp.company}</div>
+              {exp.description && <p className="exp-desc">{exp.description}</p>}
             </div>
           ))}
         </div>
@@ -103,21 +54,17 @@ export const ClassicTemplate: React.FC<ClassicTemplateProps> = ({ data }) => {
 
       {/* Education */}
       {data.education.length > 0 && (
-        <div className={style.section}>
-          <h2 className={style.sectionHeading}>EDUCATION</h2>
+        <div className="resume-section">
+          <div className="section-heading">Education</div>
           {data.education.map((edu) => (
-            <div key={edu.id} className={style.educationBlock}>
-              <div className={style.flexBetween}>
-                <div>
-                  <h3 className={style.educationDegree}>
-                    {edu.degree} {edu.field && `in ${edu.field}`}
-                  </h3>
-                  <h4 className={style.institutionText}>{edu.institution}</h4>
-                </div>
-                <div className={style.educationRight}>
-                  {formatDate(edu.graduationDate)}
-                  {edu.gpa && <div>GPA: {edu.gpa}</div>}
-                </div>
+            <div key={edu.id} className="edu-item">
+              <div className="edu-left">
+                <div className="degree">{edu.degree}{edu.field ? ` in ${edu.field}` : ""}</div>
+                <div className="institution">{edu.institution}</div>
+              </div>
+              <div className="edu-right">
+                <div>{edu.currentlyStudying ? "Present" : fmt(edu.graduationDate)}</div>
+                {edu.gpa && <div>GPA: {edu.gpa}</div>}
               </div>
             </div>
           ))}
@@ -126,17 +73,13 @@ export const ClassicTemplate: React.FC<ClassicTemplateProps> = ({ data }) => {
 
       {/* Projects */}
       {data.projects.length > 0 && (
-        <div className={style.section}>
-          <h2 className={style.sectionHeading}>PROJECTS</h2>
-          {data.projects.map((project) => (
-            <div key={project.id} className={style.projectBlock}>
-              <h3 className={style.projectName}>{project.name}</h3>
-              <p className={style.techStack}>
-                Technologies: {project.technologies}
-              </p>
-              {project.description && (
-                <p className={style.descriptionText}>{project.description}</p>
-              )}
+        <div className="resume-section">
+          <div className="section-heading">Projects</div>
+          {data.projects.map((p) => (
+            <div key={p.id} className="proj-item">
+              <div className="proj-name">{p.name}</div>
+              {p.technologies && <div className="proj-tech">{p.technologies}</div>}
+              {p.description && <p className="proj-desc">{p.description}</p>}
             </div>
           ))}
         </div>
@@ -144,14 +87,11 @@ export const ClassicTemplate: React.FC<ClassicTemplateProps> = ({ data }) => {
 
       {/* Skills */}
       {data.skills.length > 0 && (
-        <div className={style.section}>
-          <h2 className={style.sectionHeading}>SKILLS</h2>
-          <div className={style.skillGrid}>
-            {data.skills.map((skill, index) => (
-              <div key={index} className={style.skillItem}>
-                <span className={style.skillName}>{skill.name}</span>
-                {renderStars(skill.level)}
-              </div>
+        <div className="resume-section">
+          <div className="section-heading">Skills</div>
+          <div className="skills-grid">
+            {data.skills.map((s) => (
+              <span key={s.id} className="skill-chip" style={{ background: `${accentColor}15`, color: accentColor }}>{s.name}</span>
             ))}
           </div>
         </div>

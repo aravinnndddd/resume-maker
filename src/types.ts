@@ -38,7 +38,7 @@ export interface Project {
 export interface Skill {
   id: string;
   name: string;
-  level: number; // 1-5 proficiency level
+  level: number;
 }
 
 export interface ResumeData {
@@ -47,7 +47,6 @@ export interface ResumeData {
   education: Education[];
   skills: Skill[];
   projects: Project[];
-
 }
 
-export type TemplateType = 'classic' | 'modern' | 'creative' | 'executive';
+export type TemplateType = 'classic' | 'modern' | 'executive';

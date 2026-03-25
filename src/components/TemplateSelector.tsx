@@ -1,58 +1,42 @@
 import React from "react";
 import { TemplateType } from "../types";
+import { Layout } from "lucide-react";
 
 interface TemplateSelectorProps {
   selectedTemplate: TemplateType;
   onTemplateChange: (template: TemplateType) => void;
 }
 
-export const TemplateSelector: React.FC<TemplateSelectorProps> = ({
-  selectedTemplate,
-  onTemplateChange,
-}) => {
-  const templates = [
-    {
-      id: "classic" as TemplateType,
-      name: "Classic",
-      description: "Traditional and professional",
-    },
-    {
-      id: "modern" as TemplateType,
-      name: "Modern",
-      description: "Clean and contemporary",
-    },
+const templates: { id: TemplateType; name: string }[] = [
+  { id: "classic", name: "Classic" },
+  { id: "modern", name: "Modern" },
+  { id: "executive", name: "Executive" },
+];
 
-    {
-      id: "executive" as TemplateType,
-      name: "Executive",
-      description: "Elegant and sophisticated",
-    },
-  ];
-
+export const TemplateSelector: React.FC<TemplateSelectorProps> = ({ selectedTemplate, onTemplateChange }) => {
   return (
-    <div className="">
-      <div className="grid grid-cols-3 md:grid-cols-3 gap-4">
-        {templates.map((template) => (
-          <button
-            key={template.id}
-            onClick={() => onTemplateChange(template.id)}
-            className={`p-1 rounded-lg border-2 transition-all text-[15px] hover:shadow-md ${
-              selectedTemplate === template.id
-                ? "border-blue-500 bg-black/20 text-white"
-                : "border-gray-200 hover:border-gray-300"
-            }`}
-          >
-            <div className="text-center">
-              <h4 className="font-semibold mb-1  text-white">
-                {template.name}
-              </h4>
-              <p className="text-[10px]  text-white/50">
-                {template.description}
-              </p>
-            </div>
-          </button>
-        ))}
-      </div>
+    <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+      <Layout size={15} style={{ color: "var(--text-muted)" }} />
+      {templates.map((t) => (
+        <button
+          key={t.id}
+          onClick={() => onTemplateChange(t.id)}
+          style={{
+            padding: "5px 12px",
+            fontSize: 12,
+            fontWeight: 600,
+            fontFamily: "var(--font)",
+            border: `1px solid ${selectedTemplate === t.id ? "var(--accent)" : "var(--border)"}`,
+            borderRadius: 6,
+            background: selectedTemplate === t.id ? "var(--accent)" : "var(--bg-card)",
+            color: selectedTemplate === t.id ? "#fff" : "var(--text-secondary)",
+            cursor: "pointer",
+            transition: "all 0.15s",
+          }}
+        >
+          {t.name}
+        </button>
+      ))}
     </div>
   );
 };

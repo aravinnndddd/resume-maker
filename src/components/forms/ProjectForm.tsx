@@ -1,134 +1,73 @@
-import React from "react";
+import React, { useState } from "react";
 import { Project } from "../../types";
-import { Code, Plus, Trash2, ExternalLink } from "lucide-react";
-import styles from "../styles/Form/proj.module.css";
+import { FolderKanban, Plus, Trash2, ExternalLink, ChevronDown } from "lucide-react";
 
 interface ProjectFormProps {
   projects: Project[];
   updateProjects: (projects: Project[]) => void;
 }
 
-export const ProjectForm: React.FC<ProjectFormProps> = ({
-  projects,
-  updateProjects,
-}) => {
+export const ProjectForm: React.FC<ProjectFormProps> = ({ projects, updateProjects }) => {
+  const [open, setOpen] = useState(true);
+
   const addProject = () => {
-    const newProject: Project = {
+    updateProjects([...projects, {
       id: Date.now().toString(),
-      name: "",
-      description: "",
-      technologies: "",
-      link: "",
-    };
-    updateProjects([...projects, newProject]);
+      name: "", description: "", technologies: "", link: "",
+    }]);
   };
 
-  const updateProject = (id: string, field: keyof Project, value: string) => {
-    const updated = projects.map((project) =>
-      project.id === id ? { ...project, [field]: value } : project
-    );
-    updateProjects(updated);
+  const update = (id: string, field: keyof Project, value: string) => {
+    updateProjects(projects.map((p) => (p.id === id ? { ...p, [field]: value } : p)));
   };
 
-  const removeProject = (id: string) => {
-    updateProjects(projects.filter((project) => project.id !== id));
+  const remove = (id: string) => {
+    updateProjects(projects.filter((p) => p.id !== id));
   };
 
   return (
-    <div className={styles.container}>
-      <div className={styles.header}>
-        <h3 className={styles.title}>
-          <Code className={styles.icon} />
-          Projects
-        </h3>
-        <button onClick={addProject} className={styles.addButton}>
-          <Plus className={styles.iconSmall} />
-          Add Project
-        </button>
+    <div className="form-section">
+      <div className="section-header" onClick={() => setOpen(!open)}>
+        <div className="section-title"><FolderKanban /> Projects</div>
+        <ChevronDown className={`chevron ${open ? "open" : ""}`} />
       </div>
 
-      <div className={styles.entries}>
-        {projects.map((project) => (
-          <div key={project.id} className={styles.entry}>
-            <div className={styles.entryHeader}>
-              <h4 className={styles.entryTitle}>Project Entry</h4>
-              <button
-                onClick={() => removeProject(project.id)}
-                className={styles.removeButton}
-              >
-                <Trash2 className={styles.iconSmall} />
-              </button>
-            </div>
-
-            <div className={styles.grid}>
-              <div>
-                <label className={styles.label}>Project Name</label>
-                <input
-                  type="text"
-                  value={project.name}
-                  onChange={(e) =>
-                    updateProject(project.id, "name", e.target.value)
-                  }
-                  className={styles.input}
-                  placeholder="My Awesome Project"
-                />
+      {open && (
+        <div className="section-body">
+          {projects.map((proj) => (
+            <div key={proj.id} className="entry-card">
+              <div className="entry-header">
+                <span className="entry-title">{proj.name || "New Project"}</span>
+                <button className="btn-danger" onClick={() => remove(proj.id)}><Trash2 /> Remove</button>
               </div>
-
-              <div>
-                <label className={styles.label}>
-                  <ExternalLink className={styles.iconInline} />
-                  Project Link (Optional)
-                </label>
-                <input
-                  type="url"
-                  value={project.link || ""}
-                  onChange={(e) =>
-                    updateProject(project.id, "link", e.target.value)
-                  }
-                  className={styles.input}
-                  placeholder="https://github.com/username/project"
-                />
+              <div className="field-grid">
+                <div className="field">
+                  <label className="field-label">Project Name</label>
+                  <input className="field-input" value={proj.name} onChange={(e) => update(proj.id, "name", e.target.value)} placeholder="My Awesome Project" />
+                </div>
+                <div className="field">
+                  <label className="field-label"><ExternalLink /> Link (Optional)</label>
+                  <input className="field-input" type="url" value={proj.link || ""} onChange={(e) => update(proj.id, "link", e.target.value)} placeholder="https://github.com/..." />
+                </div>
+                <div className="field field-full">
+                  <label className="field-label">Technologies</label>
+                  <input className="field-input" value={proj.technologies} onChange={(e) => update(proj.id, "technologies", e.target.value)} placeholder="React, TypeScript, Node.js" />
+                </div>
+                <div className="field field-full">
+                  <label className="field-label">Description</label>
+                  <textarea className="field-textarea" value={proj.description} onChange={(e) => update(proj.id, "description", e.target.value)} rows={2} placeholder="What does this project do?" />
+                </div>
               </div>
             </div>
+          ))}
 
-            <div className={styles.section}>
-              <label className={styles.label}>Technologies Used</label>
-              <input
-                type="text"
-                value={project.technologies}
-                onChange={(e) =>
-                  updateProject(project.id, "technologies", e.target.value)
-                }
-                className={styles.input}
-                placeholder="React, TypeScript, Node.js, MongoDB"
-              />
-            </div>
+          {projects.length === 0 && (
+            <div className="empty-state"><FolderKanban /><p>No projects added yet</p></div>
+          )}
 
-            <div>
-              <label className={styles.label}>Project Description</label>
-              <textarea
-                value={project.description}
-                onChange={(e) =>
-                  updateProject(project.id, "description", e.target.value)
-                }
-                rows={3}
-                className={`${styles.input} ${styles.textarea}`}
-                placeholder="Describe what this project does and your role in it..."
-              />
-            </div>
-          </div>
-        ))}
-
-        {projects.length === 0 && (
-          <div className={styles.empty}>
-            <Code className={styles.iconLarge} />
-            <p>No projects added yet.</p>
-            <p className={styles.subtext}>
-              Click "Add Project" to get started.
-            </p>
-          </div>
-        )}
-      </div>
+          <button className="btn-add" onClick={addProject}><Plus /> Add Project</button>
+        </div>
+      )}
     </div>
   );
 };

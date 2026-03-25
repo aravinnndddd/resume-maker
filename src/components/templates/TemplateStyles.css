@@ -1,0 +1,455 @@
+/* ─── SHARED TEMPLATE STYLES ─── */
+
+/* Page break avoidance for all sections */
+.resume-section {
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+
+/* Date formatting */
+.date-range {
+  font-size: 10px;
+  color: #6b7280;
+  white-space: nowrap;
+}
+
+/* ═══════ CLASSIC TEMPLATE ═══════ */
+.classic {
+  padding: 36px 40px;
+  font-size: 11px;
+  line-height: 1.5;
+}
+.classic .header-block {
+  text-align: center;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 2px solid currentColor;
+}
+.classic .header-block .name {
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  margin-bottom: 6px;
+  color: #111;
+}
+.classic .header-block .contact-row {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 14px;
+  font-size: 10px;
+  color: #4b5563;
+}
+.classic .header-block .contact-row span {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.classic .header-block .contact-row svg { width: 11px; height: 11px; }
+
+.classic .section-heading {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: #111;
+  border-bottom: 1.5px solid #d1d5db;
+  padding-bottom: 4px;
+  margin: 16px 0 10px;
+}
+.classic .summary-text {
+  font-size: 10.5px;
+  color: #374151;
+  line-height: 1.6;
+}
+.classic .exp-item {
+  margin-bottom: 12px;
+  page-break-inside: avoid;
+}
+.classic .exp-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.classic .exp-position {
+  font-size: 12px;
+  font-weight: 700;
+  color: #111;
+}
+.classic .exp-company {
+  font-size: 10.5px;
+  font-weight: 500;
+  color: #6b7280;
+  margin-bottom: 3px;
+}
+.classic .exp-desc {
+  font-size: 10.5px;
+  color: #374151;
+  white-space: pre-line;
+  line-height: 1.6;
+}
+
+.classic .edu-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 8px;
+  page-break-inside: avoid;
+}
+.classic .edu-left .degree {
+  font-size: 12px;
+  font-weight: 700;
+  color: #111;
+}
+.classic .edu-left .institution {
+  font-size: 10.5px;
+  color: #6b7280;
+}
+.classic .edu-right {
+  text-align: right;
+  font-size: 10px;
+  color: #6b7280;
+}
+
+.classic .proj-item {
+  margin-bottom: 10px;
+  page-break-inside: avoid;
+}
+.classic .proj-name {
+  font-size: 12px;
+  font-weight: 700;
+  color: #111;
+}
+.classic .proj-tech {
+  font-size: 9.5px;
+  color: #9ca3af;
+  margin-bottom: 2px;
+}
+.classic .proj-desc {
+  font-size: 10.5px;
+  color: #374151;
+  white-space: pre-line;
+  line-height: 1.5;
+}
+
+.classic .skills-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.classic .skill-chip {
+  padding: 3px 10px;
+  font-size: 9.5px;
+  font-weight: 600;
+  border-radius: 99px;
+  background: #f3f4f6;
+  color: #374151;
+}
+
+/* ═══════ MODERN TEMPLATE ═══════ */
+.modern {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  min-height: 297mm;
+  font-size: 11px;
+  line-height: 1.5;
+}
+.modern .sidebar {
+  padding: 30px 20px;
+  color: #fff;
+}
+.modern .sidebar .avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid rgba(255,255,255,0.2);
+  margin: 0 auto 16px;
+  display: block;
+}
+.modern .sidebar .name {
+  font-size: 18px;
+  font-weight: 800;
+  text-align: center;
+  margin-bottom: 4px;
+}
+.modern .sidebar .tagline {
+  font-size: 9px;
+  text-align: center;
+  opacity: 0.7;
+  margin-bottom: 24px;
+}
+.modern .sidebar .sb-heading {
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  opacity: 0.6;
+  margin: 16px 0 8px;
+}
+.modern .sidebar .sb-contact {
+  font-size: 9.5px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.modern .sidebar .sb-contact-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  word-break: break-all;
+}
+.modern .sidebar .sb-contact-item svg { width: 11px; height: 11px; flex-shrink: 0; }
+
+.modern .sidebar .sb-skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+.modern .sidebar .sb-skill-tag {
+  padding: 2px 8px;
+  font-size: 8.5px;
+  font-weight: 600;
+  border-radius: 99px;
+  background: rgba(255,255,255,0.15);
+}
+.modern .sidebar .sb-skill-bar {
+  margin-bottom: 6px;
+}
+.modern .sidebar .sb-skill-bar .sb-skill-name {
+  font-size: 9.5px;
+  font-weight: 600;
+  margin-bottom: 3px;
+}
+.modern .sidebar .sb-skill-bar .bar-track {
+  height: 4px;
+  background: rgba(255,255,255,0.15);
+  border-radius: 99px;
+  overflow: hidden;
+}
+.modern .sidebar .sb-skill-bar .bar-fill {
+  height: 100%;
+  border-radius: 99px;
+  background: rgba(255,255,255,0.7);
+}
+
+.modern .main-content {
+  padding: 30px 32px;
+}
+.modern .main-content .mc-heading {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  padding-bottom: 4px;
+  margin: 16px 0 10px;
+  border-bottom: 2px solid;
+}
+.modern .main-content .mc-heading:first-child {
+  margin-top: 0;
+}
+.modern .mc-summary {
+  font-size: 10.5px;
+  color: #4b5563;
+  line-height: 1.6;
+}
+.modern .mc-exp-item {
+  margin-bottom: 12px;
+  page-break-inside: avoid;
+}
+.modern .mc-exp-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.modern .mc-exp-position {
+  font-size: 12px;
+  font-weight: 700;
+  color: #111;
+}
+.modern .mc-exp-company {
+  font-size: 10.5px;
+  color: #6b7280;
+  margin-bottom: 3px;
+}
+.modern .mc-exp-desc {
+  font-size: 10.5px;
+  color: #374151;
+  white-space: pre-line;
+  line-height: 1.6;
+}
+
+.modern .mc-edu-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  page-break-inside: avoid;
+}
+.modern .mc-edu-degree {
+  font-size: 12px;
+  font-weight: 700;
+  color: #111;
+}
+.modern .mc-edu-inst {
+  font-size: 10.5px;
+  color: #6b7280;
+}
+.modern .mc-edu-right {
+  text-align: right;
+}
+
+.modern .mc-proj-item {
+  margin-bottom: 10px;
+  page-break-inside: avoid;
+}
+.modern .mc-proj-name {
+  font-size: 12px;
+  font-weight: 700;
+  color: #111;
+}
+.modern .mc-proj-tech {
+  font-size: 9.5px;
+  color: #9ca3af;
+  margin-bottom: 2px;
+}
+.modern .mc-proj-desc {
+  font-size: 10.5px;
+  color: #374151;
+  white-space: pre-line;
+}
+
+/* ═══════ EXECUTIVE TEMPLATE ═══════ */
+.executive {
+  padding: 0;
+  font-size: 11px;
+  line-height: 1.5;
+}
+.executive .exec-header {
+  padding: 32px 40px 24px;
+  color: #fff;
+}
+.executive .exec-header .name {
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  margin-bottom: 4px;
+}
+.executive .exec-header .title-line {
+  font-size: 12px;
+  font-weight: 400;
+  opacity: 0.7;
+  margin-bottom: 12px;
+}
+.executive .exec-header .contact-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  font-size: 10px;
+  opacity: 0.85;
+}
+.executive .exec-header .contact-row span {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.executive .exec-header .contact-row svg { width: 11px; height: 11px; }
+
+.executive .exec-body {
+  padding: 24px 40px 36px;
+}
+.executive .exec-section {
+  margin-bottom: 16px;
+  page-break-inside: avoid;
+}
+.executive .exec-heading {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  padding-bottom: 4px;
+  margin-bottom: 10px;
+  border-bottom: 2px solid;
+}
+.executive .exec-summary {
+  font-size: 10.5px;
+  color: #4b5563;
+  line-height: 1.6;
+}
+
+.executive .exec-exp-item {
+  margin-bottom: 12px;
+  page-break-inside: avoid;
+}
+.executive .exec-exp-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.executive .exec-exp-position {
+  font-size: 12px;
+  font-weight: 700;
+  color: #111;
+}
+.executive .exec-exp-company {
+  font-size: 10.5px;
+  color: #6b7280;
+  margin-bottom: 3px;
+}
+.executive .exec-exp-desc {
+  font-size: 10.5px;
+  color: #374151;
+  white-space: pre-line;
+  line-height: 1.6;
+}
+
+.executive .exec-edu-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  page-break-inside: avoid;
+}
+.executive .exec-edu-degree {
+  font-size: 12px;
+  font-weight: 700;
+  color: #111;
+}
+.executive .exec-edu-inst {
+  font-size: 10.5px;
+  color: #6b7280;
+}
+.executive .exec-edu-right {
+  text-align: right;
+}
+
+.executive .exec-proj-item {
+  margin-bottom: 10px;
+  page-break-inside: avoid;
+}
+.executive .exec-proj-name {
+  font-size: 12px;
+  font-weight: 700;
+  color: #111;
+}
+.executive .exec-proj-tech {
+  font-size: 9.5px;
+  color: #9ca3af;
+  margin-bottom: 2px;
+}
+.executive .exec-proj-desc {
+  font-size: 10.5px;
+  color: #374151;
+  white-space: pre-line;
+}
+
+.executive .exec-skills-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.executive .exec-skill-chip {
+  padding: 3px 12px;
+  font-size: 9.5px;
+  font-weight: 600;
+  border-radius: 99px;
+  color: #fff;
+}

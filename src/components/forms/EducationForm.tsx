@@ -1,201 +1,93 @@
-import React from "react";
+import React, { useState } from "react";
 import { Education } from "../../types";
-import { GraduationCap, Plus, Trash2, Calendar } from "lucide-react";
-import Select from "react-select";
-import styles from "../styles/Form/edu.module.css";
+import { GraduationCap, Plus, Trash2, Calendar, ChevronDown } from "lucide-react";
 
 interface EducationFormProps {
   education: Education[];
   updateEducation: (education: Education[]) => void;
 }
 
-export const EducationForm: React.FC<EducationFormProps> = ({
-  education,
-  updateEducation,
-}) => {
+const DEGREE_OPTIONS = ["High School", "Associate Degree", "Diploma", "Bachelor's", "Master's", "PhD"];
+const FIELD_OPTIONS = [
+  "Computer Science", "Information Technology", "Electronics", "Mechanical Engineering",
+  "Civil Engineering", "Business Administration", "Arts", "Mathematics",
+];
+
+export const EducationForm: React.FC<EducationFormProps> = ({ education, updateEducation }) => {
+  const [open, setOpen] = useState(true);
+
   const addEducation = () => {
-    const newEducation: Education = {
+    updateEducation([...education, {
       id: Date.now().toString(),
-      institution: "",
-      degree: "",
-      field: "",
-      graduationDate: "",
-      currentlyStudying: false,
-      gpa: "",
-    };
-    updateEducation([...education, newEducation]);
+      institution: "", degree: "", field: "", graduationDate: "", currentlyStudying: false, gpa: "",
+    }]);
   };
 
-  const updateEducationItem = (
-    id: string,
-    field: keyof Education,
-    value: string | boolean
-  ) => {
-    const updated = education.map((edu) =>
-      edu.id === id ? { ...edu, [field]: value } : edu
-    );
-    updateEducation(updated);
+  const update = (id: string, field: keyof Education, value: string | boolean) => {
+    updateEducation(education.map((e) => (e.id === id ? { ...e, [field]: value } : e)));
   };
 
-  const removeEducation = (id: string) => {
-    updateEducation(education.filter((edu) => edu.id !== id));
+  const remove = (id: string) => {
+    updateEducation(education.filter((e) => e.id !== id));
   };
-
-  const degreeOptions = [
-    { value: "Bachelor's", label: "Bachelor's" },
-    { value: "Master's", label: "Master's" },
-    { value: "PhD", label: "PhD" },
-    { value: "Diploma", label: "Diploma" },
-    { value: "Associate Degree", label: "Associate Degree" },
-    { value: "High School", label: "High School" },
-  ];
-
-  const fieldOptions = [
-    { value: "Computer Science", label: "Computer Science" },
-    { value: "Information Technology", label: "Information Technology" },
-    { value: "Electronics", label: "Electronics" },
-    { value: "Mechanical Engineering", label: "Mechanical Engineering" },
-    { value: "Civil Engineering", label: "Civil Engineering" },
-    { value: "Business Administration", label: "Business Administration" },
-    { value: "Arts", label: "Arts" },
-    { value: "Mathematics", label: "Mathematics" },
-  ];
 
   return (
-    <div className={styles.container}>
-      <div className={styles.header}>
-        <h3 className={styles.title}>
-          <GraduationCap className={styles.icon} />
-          Education
-        </h3>
-        <button onClick={addEducation} className={styles.addButton}>
-          <Plus className={styles.iconSmall} />
-          Add Education
-        </button>
+    <div className="form-section">
+      <div className="section-header" onClick={() => setOpen(!open)}>
+        <div className="section-title"><GraduationCap /> Education</div>
+        <ChevronDown className={`chevron ${open ? "open" : ""}`} />
       </div>
 
-      <div className={styles.entries}>
-        {education.map((edu) => (
-          <div key={edu.id} className={styles.entry}>
-            <div className={styles.entryHeader}>
-              <h4 className={styles.entryTitle}>Education Entry</h4>
-              <button
-                onClick={() => removeEducation(edu.id)}
-                className={styles.removeButton}
-              >
-                <Trash2 className={styles.iconSmall} />
-              </button>
-            </div>
-
-            <div className={styles.grid}>
-              <div>
-                <label className={styles.label}>Institution</label>
-                <input
-                  type="text"
-                  value={edu.institution}
-                  onChange={(e) =>
-                    updateEducationItem(edu.id, "institution", e.target.value)
-                  }
-                  className={styles.input}
-                  placeholder="University Name"
-                />
+      {open && (
+        <div className="section-body">
+          {education.map((edu) => (
+            <div key={edu.id} className="entry-card">
+              <div className="entry-header">
+                <span className="entry-title">{edu.institution || "New Education"}</span>
+                <button className="btn-danger" onClick={() => remove(edu.id)}><Trash2 /> Remove</button>
               </div>
-
-              <div>
-                <label className={styles.label}>Degree</label>
-                <Select
-                  options={degreeOptions}
-                  value={degreeOptions.find(
-                    (option) => option.value === edu.degree
-                  )}
-                  onChange={(selected) =>
-                    updateEducationItem(edu.id, "degree", selected?.value || "")
-                  }
-                  className={styles.select}
-                  classNamePrefix="react-select"
-                  placeholder="Select or type degree"
-                  isClearable
-                />
+              <div className="field-grid">
+                <div className="field field-full">
+                  <label className="field-label">Institution</label>
+                  <input className="field-input" value={edu.institution} onChange={(e) => update(edu.id, "institution", e.target.value)} placeholder="University Name" />
+                </div>
+                <div className="field">
+                  <label className="field-label">Degree</label>
+                  <select className="field-select" value={edu.degree} onChange={(e) => update(edu.id, "degree", e.target.value)}>
+                    <option value="">Select degree</option>
+                    {DEGREE_OPTIONS.map((d) => <option key={d} value={d}>{d}</option>)}
+                  </select>
+                </div>
+                <div className="field">
+                  <label className="field-label">Field of Study</label>
+                  <select className="field-select" value={edu.field} onChange={(e) => update(edu.id, "field", e.target.value)}>
+                    <option value="">Select field</option>
+                    {FIELD_OPTIONS.map((f) => <option key={f} value={f}>{f}</option>)}
+                  </select>
+                </div>
+                <div className="field">
+                  <label className="field-label"><Calendar /> Graduation Date</label>
+                  <input className="field-input" type="month" value={edu.graduationDate} onChange={(e) => update(edu.id, "graduationDate", e.target.value)} disabled={edu.currentlyStudying} style={{ opacity: edu.currentlyStudying ? 0.4 : 1 }} />
+                  <div className="checkbox-row">
+                    <input type="checkbox" checked={edu.currentlyStudying || false} onChange={(e) => update(edu.id, "currentlyStudying", e.target.checked)} />
+                    <span>Currently studying</span>
+                  </div>
+                </div>
+                <div className="field">
+                  <label className="field-label">GPA (Optional)</label>
+                  <input className="field-input" value={edu.gpa || ""} onChange={(e) => update(edu.id, "gpa", e.target.value)} placeholder="e.g. 3.8/4.0" />
+                </div>
               </div>
             </div>
+          ))}
 
-            <div className={styles.grid}>
-              <div>
-                <label className={styles.label}>Field of Study</label>
-                <Select
-                  options={fieldOptions}
-                  value={fieldOptions.find(
-                    (option) => option.value === edu.field
-                  )}
-                  onChange={(selected) =>
-                    updateEducationItem(edu.id, "field", selected?.value || "")
-                  }
-                  className={styles.select}
-                  classNamePrefix="react-select"
-                  placeholder="Select or type field"
-                  isClearable
-                />
-              </div>
+          {education.length === 0 && (
+            <div className="empty-state"><GraduationCap /><p>No education added yet</p></div>
+          )}
 
-              <div>
-                <label className={styles.label}>
-                  <Calendar className={styles.iconInline} />
-                  Graduation Date
-                </label>
-                <input
-                  type="month"
-                  value={edu.graduationDate}
-                  onChange={(e) =>
-                    updateEducationItem(
-                      edu.id,
-                      "graduationDate",
-                      e.target.value
-                    )
-                  }
-                  disabled={edu.currentlyStudying}
-                  className={styles.input}
-                />
-                <label className={styles.checkboxLabel}>
-                  <input
-                    type="checkbox"
-                    checked={edu.currentlyStudying || false}
-                    onChange={(e) =>
-                      updateEducationItem(
-                        edu.id,
-                        "currentlyStudying",
-                        e.target.checked
-                      )
-                    }
-                    className={styles.checkbox}
-                  />
-                  Currently studying here
-                </label>
-              </div>
-            </div>
-
-            <div>
-              <label className={styles.label}>GPA (Optional)</label>
-              <input
-                type="text"
-                value={edu.gpa || ""}
-                onChange={(e) =>
-                  updateEducationItem(edu.id, "gpa", e.target.value)
-                }
-                className={styles.input}
-                placeholder="e.g. 3.8/4.0"
-              />
-            </div>
-          </div>
-        ))}
-
-        {education.length === 0 && (
-          <div className={styles.empty}>
-            <GraduationCap className={styles.iconLarge} />
-            <p>No education added yet.</p>
-            <p>Click "Add Education" to get started.</p>
-          </div>
-        )}
-      </div>
+          <button className="btn-add" onClick={addEducation}><Plus /> Add Education</button>
+        </div>
+      )}
     </div>
   );
 };

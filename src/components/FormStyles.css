@@ -1,0 +1,340 @@
+/* ─── SHARED FORM STYLES ─── */
+.form-section {
+  margin-bottom: 8px;
+  border-radius: 12px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  overflow: hidden;
+  transition: border-color 0.2s;
+}
+.form-section:hover {
+  border-color: color-mix(in srgb, var(--accent) 40%, transparent);
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  cursor: pointer;
+  user-select: none;
+}
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: var(--text-primary);
+}
+.section-title svg {
+  width: 16px;
+  height: 16px;
+  color: var(--accent);
+}
+.chevron {
+  color: var(--text-muted);
+  transition: transform 0.2s;
+  width: 16px;
+  height: 16px;
+}
+.chevron.open {
+  transform: rotate(180deg);
+}
+
+.section-body {
+  padding: 0 16px 16px;
+}
+
+/* Field groups */
+.field-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.field-full {
+  grid-column: 1 / -1;
+}
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.field-label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+.field-label svg {
+  width: 12px;
+  height: 12px;
+}
+
+.field-input,
+.field-textarea,
+.field-select {
+  width: 100%;
+  padding: 9px 12px;
+  font-size: 13px;
+  font-family: var(--font);
+  color: var(--text-primary);
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.field-input:focus,
+.field-textarea:focus,
+.field-select:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+}
+.field-input::placeholder,
+.field-textarea::placeholder {
+  color: var(--text-muted);
+}
+.field-textarea {
+  resize: vertical;
+  min-height: 72px;
+}
+.field-select {
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3e%3cpath d='M3 5l3 3 3-3' stroke='%239494aa' stroke-width='1.5' fill='none'/%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  padding-right: 28px;
+}
+
+/* Entry cards */
+.entry-card {
+  padding: 14px;
+  margin-bottom: 10px;
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  position: relative;
+  transition: border-color 0.15s;
+}
+.entry-card:hover {
+  border-color: color-mix(in srgb, var(--accent) 30%, transparent);
+}
+.entry-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+.entry-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+/* Buttons */
+.btn-add {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 7px 14px;
+  font-size: 12px;
+  font-weight: 600;
+  font-family: var(--font);
+  color: #fff;
+  background: var(--accent);
+  border: none;
+  border-radius: 7px;
+  cursor: pointer;
+  transition: opacity 0.15s, transform 0.1s;
+}
+.btn-add:hover {
+  opacity: 0.85;
+}
+.btn-add:active {
+  transform: scale(0.97);
+}
+.btn-add svg {
+  width: 14px;
+  height: 14px;
+}
+
+.btn-danger {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 5px 8px;
+  font-size: 11px;
+  font-family: var(--font);
+  color: var(--danger);
+  background: rgba(239, 68, 68, 0.08);
+  border: 1px solid rgba(239, 68, 68, 0.15);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.btn-danger:hover {
+  background: rgba(239, 68, 68, 0.15);
+  border-color: rgba(239, 68, 68, 0.3);
+}
+.btn-danger svg {
+  width: 12px;
+  height: 12px;
+}
+
+/* Checkbox */
+.checkbox-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 6px;
+}
+.checkbox-row input[type="checkbox"] {
+  accent-color: var(--accent);
+  width: 14px;
+  height: 14px;
+  cursor: pointer;
+}
+.checkbox-row span {
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+
+/* Empty state */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 24px 0;
+  color: var(--text-muted);
+  font-size: 12px;
+}
+.empty-state svg {
+  width: 28px;
+  height: 28px;
+  opacity: 0.3;
+}
+
+/* Profile picture */
+.avatar-upload {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 12px;
+}
+.avatar-preview {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--border);
+}
+.avatar-placeholder {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--bg-input);
+  border: 2px dashed var(--border);
+  display: grid;
+  place-items: center;
+  color: var(--text-muted);
+}
+.avatar-placeholder svg {
+  width: 20px;
+  height: 20px;
+}
+.file-input-label {
+  padding: 6px 14px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--accent);
+  background: rgba(99, 102, 241, 0.08);
+  border: 1px solid rgba(99, 102, 241, 0.18);
+  border-radius: 7px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.file-input-label:hover {
+  background: rgba(99, 102, 241, 0.15);
+}
+.file-input-hidden {
+  display: none;
+}
+
+/* Skills */
+.skill-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 4px;
+}
+.skill-pill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  border-radius: 99px;
+  font-size: 12px;
+  color: var(--text-primary);
+  transition: border-color 0.15s;
+}
+.skill-pill:hover {
+  border-color: var(--accent);
+}
+.skill-pill .level-dots {
+  display: flex;
+  gap: 2px;
+}
+.skill-pill .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--border);
+  transition: background 0.15s;
+}
+.skill-pill .dot.filled {
+  background: var(--accent);
+}
+.skill-pill .remove-skill {
+  display: flex;
+  align-items: center;
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 0;
+  margin-left: 2px;
+  transition: color 0.15s;
+}
+.skill-pill .remove-skill:hover {
+  color: var(--danger);
+}
+.skill-pill .remove-skill svg {
+  width: 12px;
+  height: 12px;
+}
+
+/* Add skill inline form */
+.add-skill-row {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+  align-items: flex-end;
+}
+.add-skill-row .field {
+  flex: 1;
+}
+.add-skill-row .btn-add {
+  height: 36px;
+  white-space: nowrap;
+}
