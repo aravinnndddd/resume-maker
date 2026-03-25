@@ -1,15 +1,25 @@
 import { useState, useEffect, useCallback } from "react";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import { ResumeForm } from "./components/ResumeForm";
 import { ResumePreview } from "./components/ResumePreview";
 import { TemplateSelector } from "./components/TemplateSelector";
 import { ResumeData, TemplateType } from "./types";
+import { LandingPage } from "./components/LandingPage";
+import { FeaturesPage } from "./components/FeaturesPage";
 import { FileText, Check, Palette } from "lucide-react";
 import "./App.css";
 
 const ACCENT_COLORS = [
-  "#6366f1", "#8b5cf6", "#ec4899", "#f43f5e",
-  "#f97316", "#eab308", "#22c55e", "#06b6d4",
-  "#3b82f6", "#64748b",
+  "#6366f1",
+  "#8b5cf6",
+  "#ec4899",
+  "#f43f5e",
+  "#f97316",
+  "#eab308",
+  "#22c55e",
+  "#06b6d4",
+  "#3b82f6",
+  "#64748b",
 ];
 
 const initialData: ResumeData = {
@@ -29,17 +39,21 @@ const initialData: ResumeData = {
 
 function App() {
   const [resumeData, setResumeData] = useState<ResumeData>(initialData);
-  const [selectedTemplate, setSelectedTemplate] = useState<TemplateType>("classic");
+  const [selectedTemplate, setSelectedTemplate] =
+    useState<TemplateType>("classic");
   const [accentColor, setAccentColor] = useState("#6366f1");
   const [zoom, setZoom] = useState(0.55);
   const [saved, setSaved] = useState(false);
   const [showColorPicker, setShowColorPicker] = useState(false);
+  const navigate = useNavigate();
 
   // Load from localStorage
   useEffect(() => {
     const savedData = localStorage.getItem("resumeBuilderData");
     if (savedData) {
-      try { setResumeData(JSON.parse(savedData)); } catch {}
+      try {
+        setResumeData(JSON.parse(savedData));
+      } catch {}
     }
     const savedTemplate = localStorage.getItem("resumeBuilderTemplate");
     if (savedTemplate) setSelectedTemplate(savedTemplate as TemplateType);
@@ -66,15 +80,23 @@ function App() {
     document.documentElement.style.setProperty("--accent", accentColor);
   }, [accentColor]);
 
-  return (
+  const Builder = () => (
     <div className="app-root">
       {/* ── HEADER ── */}
       <header className="app-header no-print">
         <div className="header-left">
-          <div className="logo-mark">
+          <div
+            className="logo-mark cursor-pointer"
+            onClick={() => navigate("/")}
+          >
             <FileText size={22} />
           </div>
-          <h1 className="logo-text">ResumeForge</h1>
+          <h1
+            className="logo-text cursor-pointer"
+            onClick={() => navigate("/")}
+          >
+            Make Resume
+          </h1>
           {saved && (
             <span className="save-badge">
               <Check size={13} /> Saved
@@ -99,13 +121,19 @@ function App() {
                     key={c}
                     className={`color-swatch ${accentColor === c ? "active" : ""}`}
                     style={{ background: c }}
-                    onClick={() => { setAccentColor(c); setShowColorPicker(false); }}
+                    onClick={() => {
+                      setAccentColor(c);
+                      setShowColorPicker(false);
+                    }}
                   />
                 ))}
               </div>
             )}
           </div>
-          <TemplateSelector selectedTemplate={selectedTemplate} onTemplateChange={setSelectedTemplate} />
+          <TemplateSelector
+            selectedTemplate={selectedTemplate}
+            onTemplateChange={setSelectedTemplate}
+          />
         </div>
       </header>
 
@@ -128,6 +156,14 @@ function App() {
         </section>
       </main>
     </div>
+  );
+
+  return (
+    <Routes>
+      <Route path="/" element={<LandingPage />} />
+      <Route path="/features" element={<FeaturesPage />} />
+      <Route path="/builder" element={<Builder />} />
+    </Routes>
   );
 }
 

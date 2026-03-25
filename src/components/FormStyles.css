@@ -51,7 +51,7 @@
 /* Field groups */
 .field-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   gap: 12px;
 }
 .field-full {
@@ -89,7 +89,9 @@
   border: 1px solid var(--border);
   border-radius: 8px;
   outline: none;
-  transition: border-color 0.15s, box-shadow 0.15s;
+  transition:
+    border-color 0.15s,
+    box-shadow 0.15s;
 }
 .field-input:focus,
 .field-textarea:focus,
@@ -153,7 +155,9 @@
   border: none;
   border-radius: 7px;
   cursor: pointer;
-  transition: opacity 0.15s, transform 0.1s;
+  transition:
+    opacity 0.15s,
+    transform 0.1s;
 }
 .btn-add:hover {
   opacity: 0.85;
