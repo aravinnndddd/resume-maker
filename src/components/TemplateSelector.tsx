@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { TemplateType } from "../types";
-import { Layout } from "lucide-react";
+import { Layout, Menu } from "lucide-react";
+import "./TemplateSelector.css";
 
 interface TemplateSelectorProps {
   selectedTemplate: TemplateType;
@@ -13,30 +14,69 @@ const templates: { id: TemplateType; name: string }[] = [
   { id: "executive", name: "Executive" },
 ];
 
-export const TemplateSelector: React.FC<TemplateSelectorProps> = ({ selectedTemplate, onTemplateChange }) => {
+export const TemplateSelector: React.FC<TemplateSelectorProps> = ({
+  selectedTemplate,
+  onTemplateChange,
+}) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   return (
-    <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-      <Layout size={15} style={{ color: "var(--text-muted)" }} />
-      {templates.map((t) => (
+    <div className="template-selector-wrap" ref={dropdownRef}>
+      <div className="ts-desktop">
+        <Layout size={15} style={{ color: "var(--text-muted)" }} />
+        {templates.map((t) => (
+          <button
+            key={t.id}
+            onClick={() => onTemplateChange(t.id)}
+            className={`ts-btn ${selectedTemplate === t.id ? "active" : ""}`}
+          >
+            {t.name}
+          </button>
+        ))}
+      </div>
+
+      <div className="ts-mobile">
         <button
-          key={t.id}
-          onClick={() => onTemplateChange(t.id)}
-          style={{
-            padding: "5px 12px",
-            fontSize: 12,
-            fontWeight: 600,
-            fontFamily: "var(--font)",
-            border: `1px solid ${selectedTemplate === t.id ? "var(--accent)" : "var(--border)"}`,
-            borderRadius: 6,
-            background: selectedTemplate === t.id ? "var(--accent)" : "var(--bg-card)",
-            color: selectedTemplate === t.id ? "#fff" : "var(--text-secondary)",
-            cursor: "pointer",
-            transition: "all 0.15s",
-          }}
+          className="icon-btn ts-hamburger"
+          onClick={() => setIsOpen(!isOpen)}
         >
-          {t.name}
+          <Menu size={18} />
+          <span className="ts-current-name">
+            {templates.find((t) => t.id === selectedTemplate)?.name}
+          </span>
         </button>
-      ))}
+        {isOpen && (
+          <div className="ts-dropdown">
+            <div className="ts-dropdown-header">Select Template</div>
+            {templates.map((t) => (
+              <button
+                key={t.id}
+                onClick={() => {
+                  onTemplateChange(t.id);
+                  setIsOpen(false);
+                }}
+                className={`ts-dropdown-item ${selectedTemplate === t.id ? "active" : ""}`}
+              >
+                {t.name}
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 };

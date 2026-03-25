@@ -162,3 +162,28 @@
     min-height: 50vh;
   }
 }
+
+@media (max-width: 640px) {
+  .app-header {
+    padding: 0 16px;
+  }
+  .logo-text {
+    display: none;
+  }
+  .header-right {
+    gap: 8px;
+  }
+  .icon-btn span.color-dot {
+    display: none;
+  }
+  .icon-btn {
+    padding: 6px;
+  }
+  .save-badge {
+    padding: 2px 6px;
+    font-size: 10px;
+  }
+  .panel-form {
+    padding: 12px;
+  }
+}

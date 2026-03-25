@@ -111,3 +111,23 @@
     width: 100% !important;
   }
 }
+
+/* Responsive */
+@media (max-width: 640px) {
+  .preview-toolbar {
+    flex-direction: column;
+    gap: 12px;
+    padding: 12px;
+  }
+  .preview-scroll {
+    padding: 20px 10px;
+  }
+  .zoom-controls {
+    width: 100%;
+    justify-content: center;
+  }
+  .download-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
