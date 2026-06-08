@@ -80,7 +80,7 @@ function App() {
     document.documentElement.style.setProperty("--accent", accentColor);
   }, [accentColor]);
 
-  const Builder = () => (
+  const builderElement = (
     <div className="app-root">
       {/* ── HEADER ── */}
       <header className="app-header no-print">
@@ -162,7 +162,7 @@ function App() {
     <Routes>
       <Route path="/" element={<LandingPage />} />
       <Route path="/features" element={<FeaturesPage />} />
-      <Route path="/builder" element={<Builder />} />
+      <Route path="/builder" element={builderElement} />
     </Routes>
   );
 }
